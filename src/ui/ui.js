@@ -33,6 +33,8 @@ function displayMovieDetails(movie) {
         <p>Vote count: ${movie.vote_count}</p>
         <p>Popularity: ${movie.popularity}</p>
         <p>Language: ${movie.original_language}</p>
+        <button id="watchlistBtn" class="button">Add to Watch List</button>
+        <button id="favoritesBtn" class="button">Add to Favorites</button>
     `;
 
     // Show the modal
@@ -44,6 +46,17 @@ function displayMovieDetails(movie) {
     span.onclick = function() {
         modal.style.display = "none";
     }
+    document.getElementById('watchlistBtn').addEventListener('click', () => addToWatchList(movie));
+    document.getElementById('favoritesBtn').addEventListener('click', () => addToFavorites(movie));
+}
+function addToWatchList(movie) {
+    console.log(`Movie ${movie.title} added to Watch List.`);
+    // Implement functionality here
+}
+
+function addToFavorites(movie) {
+    console.log(`Movie ${movie.title} added to Favorites.`);
+    // Implement functionality here
 }
 
 function navigateToPage(pageNumber, totalPages) {
