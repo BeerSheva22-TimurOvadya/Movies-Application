@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Movie Page</title>
+        <link rel="stylesheet" href="styles/styles.css" />
+    </head>
+    <body>
+        <button id="homeBtn">HOME</button>
+        <div id="moviesContainer"></div>
+        <div id="paginationContainer"></div>
+
+        <!-- Modal -->
+        <div id="movieModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="movieDetails"></div>
+            </div>
+        </div>
+
+        <script src="src/config/config.js"></script>
+        <script src="src/service/moviesService.js"></script>
+        <script src="src/ui/ui.js"></script>
+        <!-- <script src="src/util/helpers.js"></script> -->
+        <script src="main.js"></script>
+    </body>
+</html>
