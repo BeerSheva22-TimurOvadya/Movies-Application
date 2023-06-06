@@ -10,7 +10,7 @@ function displayMovies(movies) {
             <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}">
             <h2>${movie.original_title}</h2>
             <p>Vote average: ${movie.vote_average}</p>
-            
+            <p>Genres: ${movie.genre_ids.map(id => genres[id]).join(', ')}</p>
            `;
 
         movieCard.addEventListener('click', () => {
