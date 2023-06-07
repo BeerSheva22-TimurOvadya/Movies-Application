@@ -1,4 +1,5 @@
-function displayMovies(movies) {
+import { fetchMovies, genres } from '../service/moviesService.js';
+export function displayMovies(movies) {
     const moviesContainer = document.getElementById('moviesContainer');
     moviesContainer.innerHTML = ""; // Clear the container
 
@@ -21,7 +22,7 @@ function displayMovies(movies) {
     });
 }
 
-function displayMovieDetails(movie) {
+export function displayMovieDetails(movie) {
     const movieDetails = document.getElementById('movieDetails');
     movieDetails.innerHTML = ""; // Clear the container
 
@@ -59,7 +60,7 @@ function addToFavorites(movie) {
     // Implement functionality here
 }
 
-function navigateToPage(pageNumber, totalPages) {
+export function navigateToPage(pageNumber, totalPages) {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
         fetchMovies(pageNumber)
             .then(data => {
@@ -78,7 +79,7 @@ function navigateToPage(pageNumber, totalPages) {
     }
 }
 
-function createNavigationButton(label, isEnabled, onClick) {
+export function createNavigationButton(label, isEnabled, onClick) {
     const button = document.createElement('button');
     button.innerText = label;
     button.disabled = !isEnabled;
@@ -86,7 +87,7 @@ function createNavigationButton(label, isEnabled, onClick) {
     return button;
 }
 
-function createPageInput(currentPage, totalPages) {
+export function createPageInput(currentPage, totalPages) {
     const pageInput = document.createElement('input');
     pageInput.type = 'number';
     pageInput.min = 1;
@@ -104,7 +105,7 @@ function createPageInput(currentPage, totalPages) {
     return pageInput;
 }
 
-function displayPagination(currentPage, totalPages) {
+export function displayPagination(currentPage, totalPages) {
     const paginationContainer = document.getElementById('paginationContainer');
     paginationContainer.innerHTML = ""; // Clear the container
 

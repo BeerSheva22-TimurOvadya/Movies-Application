@@ -1,3 +1,5 @@
+import { API_KEY, BASE_URL } from '../config/config.js';
+
 async function fetchMovies(page) {
     const url = `${BASE_URL}movie/popular?language=en-US&page=${page}&api_key=${API_KEY}`;
     const response = await fetch(url);
@@ -17,10 +19,13 @@ async function fetchGenres() {
     }
     return data.genres.reduce((acc, genre) => ({ ...acc, [genre.id]: genre.name }), {});
 }
-let genres = {};
 
-fetchGenres()
-    .then(fetchedGenres => {
-        genres = fetchedGenres;
-    })
-    .catch(error => console.error(error));
+export let genres = {};
+
+export const initializeGenres = () => {
+    fetchGenres()
+        .then(fetchedGenres => {
+            genres = fetchedGenres;
+        })
+        .catch(error => console.error(error));
+}
