@@ -57,7 +57,7 @@ export default class PaginationUI {
         this.paginationContainer.appendChild(pageInputBtn);
         this.paginationContainer.appendChild(nextBtn);
     }
-    
+
     setMovieUI(movieUI) {
         this.movieUI = movieUI;
     }
