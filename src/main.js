@@ -1,11 +1,14 @@
-import { fetchMovies, initializeGenres } from './src/service/moviesService.js';
-import { displayMovies, displayPagination, navigateToPage } from './src/ui/ui.js';
+import { fetchMovies, initializeGenres } from './service/moviesService.js';
+import { displayMovies, displayPagination, navigateToPage } from './ui/ui.js';
+import { initializeFilterUI } from './ui/filter-ui.js';
+
 const START_PAGE = 1;
 const TOTAL_PAGES = 2;
 
 document.addEventListener('DOMContentLoaded', (event) => {
     initializeGenres();
     navigateToPage(START_PAGE, TOTAL_PAGES);
+    initializeFilterUI();
 });
 
 document.getElementById('homeBtn').addEventListener('click', () => {
@@ -16,3 +19,4 @@ document.getElementById('homeBtn').addEventListener('click', () => {
         })
         .catch(error => console.error(error));
 });
+
