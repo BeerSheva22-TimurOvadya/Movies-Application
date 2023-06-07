@@ -1,22 +1,26 @@
-import { fetchMovies, initializeGenres } from './service/moviesService.js';
-import { displayMovies, displayPagination, navigateToPage } from './ui/ui.js';
-import { initializeFilterUI } from './ui/filter-ui.js';
+import MovieService from './service/MoviesService.js';
+import MovieUI from './ui/MovieUI.js';
+import FilterUI from './ui/FilterUI.js';
+import PaginationUI from './ui/PaginationUI.js';
 
 const START_PAGE = 1;
-const TOTAL_PAGES = 2;
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    initializeGenres();
-    navigateToPage(START_PAGE, TOTAL_PAGES);
-    initializeFilterUI();
+document.addEventListener('DOMContentLoaded', async () => {
+    const paginationUI = new PaginationUI('paginationContainer');
+    const movieUI = new MovieUI('moviesContainer', 'movieModal', paginationUI);
+    paginationUI.setMovieUI(movieUI);
+    const filterUI = new FilterUI('filterModal');
+    
+
+    const movies = await MovieService.fetchMovies(START_PAGE);
+    movieUI.displayMovies(movies.results);
+    paginationUI.displayPagination(START_PAGE, movies.total_pages);
+
+    document.getElementById('homeBtn').addEventListener('click', async () => {
+        const movies = await MovieService.fetchMovies(START_PAGE);
+        movieUI.displayMovies(movies.results);
+        paginationUI.displayPagination(START_PAGE, movies.total_pages);
+    });
+
+    document.getElementById('filterBtn').addEventListener('click', filterUI.openModal);
 });
-
-document.getElementById('homeBtn').addEventListener('click', () => {
-    fetchMovies(START_PAGE)
-        .then(data => {
-            displayMovies(data.results);
-            displayPagination(1, data.total_pages);
-        })
-        .catch(error => console.error(error));
-});
-

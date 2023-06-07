@@ -1,31 +1,31 @@
 import { API_KEY, BASE_URL } from '../config/config.js';
 
-export async function fetchMovies(page) {
-    const url = `${BASE_URL}movie/popular?language=en-US&page=${page}&api_key=${API_KEY}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data.errors) {
-        throw data;
+export default class MovieService {
+    static async fetchMovies(page) {
+        const url = `${BASE_URL}movie/popular?language=en-US&page=${page}&api_key=${API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.errors) {
+            throw data;
+        }
+        return data;
     }
-    return data;
-}
 
-async function fetchGenres() {
-    const url = `${BASE_URL}genre/movie/list?language=en&api_key=${API_KEY}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data.errors) {
-        throw data;
+    static async fetchGenres() {
+        const url = `${BASE_URL}genre/movie/list?language=en&api_key=${API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.errors) {
+            throw data;
+        }
+        return data.genres.reduce((acc, genre) => ({ ...acc, [genre.id]: genre.name }), {});
     }
-    return data.genres.reduce((acc, genre) => ({ ...acc, [genre.id]: genre.name }), {});
-}
 
-export let genres = {};
-
-export const initializeGenres = () => {
-    fetchGenres()
-        .then(fetchedGenres => {
-            genres = fetchedGenres;
-        })
-        .catch(error => console.error(error));
+    static async initializeGenres() {
+        try {
+            return await this.fetchGenres();
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
