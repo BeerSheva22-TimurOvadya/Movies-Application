@@ -1,6 +1,6 @@
 import { API_KEY, BASE_URL } from '../config/config.js';
 
-async function fetchMovies(page) {
+export async function fetchMovies(page) {
     const url = `${BASE_URL}movie/popular?language=en-US&page=${page}&api_key=${API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
