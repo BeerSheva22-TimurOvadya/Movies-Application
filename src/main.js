@@ -19,6 +19,7 @@ async function main() {
 }
 
 async function homeHandler() {
+    filterUI.resetFilterSettings();  // Reset filter settings when HOME button is clicked
     const movies = await MovieService.fetchMovies(START_PAGE);
     movieUI.displayMovies(movies.results);
     paginationUI.displayPagination(START_PAGE, movies.total_pages);

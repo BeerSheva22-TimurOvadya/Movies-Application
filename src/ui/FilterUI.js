@@ -1,6 +1,6 @@
 import MovieService from '../service/moviesService.js';
 export default class FilterUI {
-    constructor(filterModalId, movieUI) {
+    constructor(filterModalId, movieUI, homeHandler) {
         this.filterModal = document.getElementById(filterModalId);
         this.movieUI = movieUI; // save movieUI reference
         this.openModal = this.openModal.bind(this);
@@ -8,6 +8,7 @@ export default class FilterUI {
         this.applyFilterSettings = this.applyFilterSettings.bind(this); // bind this to applyFilterSettings
         this.resetFilterSettings = this.resetFilterSettings.bind(this); // bind this to resetFilterSettings
         this.initializeFilterUI();
+        
     }
 
     openModal() {
@@ -65,6 +66,16 @@ export default class FilterUI {
         const genreWithFilter = document.getElementById('genreWithFilter');
         const genreWithoutFilter = document.getElementById('genreWithoutFilter');
 
+        // Update available genres when a genre is selected in "With Genre" filter
+        genreWithFilter.addEventListener('change', () => {
+            this.updateAvailableGenres(genreWithoutFilter, genreWithFilter.value);
+        });
+
+        // Update available genres when a genre is selected in "Without Genre" filter
+        genreWithoutFilter.addEventListener('change', () => {
+            this.updateAvailableGenres(genreWithFilter, genreWithoutFilter.value);
+        });
+
         Object.entries(this.genres).forEach(([id, name]) => {
             const option = document.createElement('option');
             option.value = id;
@@ -75,6 +86,35 @@ export default class FilterUI {
 
             const optionWithout = option.cloneNode(true);
             genreWithoutFilter.appendChild(optionWithout);
+        });
+    }
+    updateAvailableGenres(genreSelect, selectedGenre) {
+        // Get the current selected genre in the other filter
+        const currentSelectedGenre = genreSelect.value;
+
+        // Clear all options in the genre select
+        genreSelect.innerHTML = '';
+
+        // Add an empty option
+        const emptyOption = document.createElement('option');
+        emptyOption.value = '';
+        emptyOption.innerText = 'Select genre';
+        genreSelect.appendChild(emptyOption);
+
+        // Add genres that are not selected in the other filter
+        Object.entries(this.genres).forEach(([id, name]) => {
+            if (id !== selectedGenre) {
+                const option = document.createElement('option');
+                option.value = id;
+                option.innerText = name;
+
+                // Keep the current selected genre in the other filter if it is still available
+                if (id === currentSelectedGenre) {
+                    option.selected = true;
+                }
+
+                genreSelect.appendChild(option);
+            }
         });
     }
 
@@ -99,5 +139,6 @@ export default class FilterUI {
         document.getElementById('yearFromFilter').value = '';
         document.getElementById('yearToFilter').value = '';
         this.movieUI.applyFilter(null);
+        
     }
 }
