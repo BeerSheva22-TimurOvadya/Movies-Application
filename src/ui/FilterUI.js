@@ -83,6 +83,7 @@ export default class FilterUI {
     applyFilterSettings() {
         this.filter = this.getFilterSettings();
         this.movieUI.applyFilter(this.filter);
+        this.closeModal();
     }
 
     getFilterSettings() {
@@ -99,6 +100,6 @@ export default class FilterUI {
         document.getElementById('genreWithoutFilter').value = "";
         document.getElementById('yearFromFilter').value = "";
         document.getElementById('yearToFilter').value = "";
-        console.log('Filter settings reset');
+        this.movieUI.applyFilter(null);       
     }
 }
