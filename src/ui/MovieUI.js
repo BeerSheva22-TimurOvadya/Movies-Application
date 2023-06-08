@@ -2,25 +2,25 @@ import { MOVIE_IMAGE_URL, START_PAGE } from '../config/config.js';
 import MovieService from '../service/moviesService.js';
 
 export default class MovieUI {
-  constructor(moviesContainerId, movieModalId, paginationUI) {
-    this.moviesContainer = document.getElementById(moviesContainerId);
-    this.movieModal = document.getElementById(movieModalId);
-    this.paginationUI = paginationUI;
-    this.closeModal = this.closeModal.bind(this);
-    this.pageAndMoveInfo();
-}
+    constructor(moviesContainerId, movieModalId, paginationUI) {
+        this.moviesContainer = document.getElementById(moviesContainerId);
+        this.movieModal = document.getElementById(movieModalId);
+        this.paginationUI = paginationUI;
+        this.closeModal = this.closeModal.bind(this);
+        this.pageAndMoveInfo();
+    }
 
     async displayMovies(movies) {
         const genres = await MovieService.initializeGenres();
-        this.moviesContainer.innerHTML = ""; // Clear the container
-        movies.forEach(movie => {
+        this.moviesContainer.innerHTML = ''; // Clear the container
+        movies.forEach((movie) => {
             const movieCard = document.createElement('div');
             movieCard.classList.add('movie-card');
             movieCard.innerHTML = `
                 <img src="${MOVIE_IMAGE_URL}${movie.poster_path}">
                 <h2>${movie.original_title}</h2>
                 <p>Vote average: ${movie.vote_average}</p>
-                <p>Genres: ${movie.genre_ids.map(id => genres[id]).join(', ')}</p>
+                <p>Genres: ${movie.genre_ids.map((id) => genres[id]).join(', ')}</p>
             `;
             movieCard.addEventListener('click', () => {
                 this.displayMovieDetails(movie, genres);
@@ -31,7 +31,7 @@ export default class MovieUI {
 
     displayMovieDetails(movie, genres) {
         // Show the modal
-        this.movieModal.style.display = "block";
+        this.movieModal.style.display = 'block';
         this.movieModal.innerHTML = `
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -48,32 +48,32 @@ export default class MovieUI {
                 </div>
             </div>
         `;
-        
+
         // When the user clicks on <span> (x), close the modal
-        const span = document.getElementsByClassName("close")[0];
+        const span = document.getElementsByClassName('close')[0];
         span.onclick = this.closeModal;
     }
 
     closeModal() {
-        this.movieModal.style.display = "none";
+        this.movieModal.style.display = 'none';
     }
 
     async applyFilter(filter) {
         this.filter = filter;
-        if(filter === null) {
+        if (filter === null) {
             const data = await MovieService.fetchMovies(START_PAGE);
             return;
         }
         const data = await MovieService.fetchFilteredMovies(START_PAGE, this.filter);
         this.displayMovies(data.results);
         this.paginationUI.displayPagination(START_PAGE, data.total_pages);
-        this.updateMovieInfo(data.total_results, data.total_pages)
+        this.updateMovieInfo(data.total_results, data.total_pages);
     }
 
     async navigateToPage(pageNumber, totalPages) {
         if (pageNumber >= 1 && pageNumber <= totalPages) {
             let data;
-            if(this.filter) {
+            if (this.filter) {
                 data = await MovieService.fetchFilteredMovies(pageNumber, this.filter);
             } else {
                 data = await MovieService.fetchMovies(pageNumber);

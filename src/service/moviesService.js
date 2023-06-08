@@ -32,10 +32,10 @@ export default class MovieService {
         let url = `${BASE_URL}discover/movie?language=en-US&sort_by=popularity.desc&page=${page}&api_key=${API_KEY}`;
 
         // Apply filter parameters if available
-        if(filter && filter.genreWith) url += `&with_genres=${filter.genreWith}`;
-        if(filter && filter.genreWithout) url += `&without_genres=${filter.genreWithout}`;
-        if(filter && filter.yearFrom) url += `&primary_release_date.gte=${filter.yearFrom}-01-01`;
-        if(filter && filter.yearTo) url += `&primary_release_date.lte=${filter.yearTo}-12-31`;
+        if (filter && filter.genreWith) url += `&with_genres=${filter.genreWith}`;
+        if (filter && filter.genreWithout) url += `&without_genres=${filter.genreWithout}`;
+        if (filter && filter.yearFrom) url += `&primary_release_date.gte=${filter.yearFrom}-01-01`;
+        if (filter && filter.yearTo) url += `&primary_release_date.lte=${filter.yearTo}-12-31`;
 
         const response = await fetch(url);
         const data = await response.json();

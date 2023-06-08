@@ -8,7 +8,6 @@ export default class FilterUI {
         this.applyFilterSettings = this.applyFilterSettings.bind(this); // bind this to applyFilterSettings
         this.resetFilterSettings = this.resetFilterSettings.bind(this); // bind this to resetFilterSettings
         this.initializeFilterUI();
-        
     }
 
     openModal() {
@@ -54,15 +53,13 @@ export default class FilterUI {
     `;
 
         const closeBtn = document.getElementById('filterCloseBtn');
-        closeBtn.addEventListener('click', this.closeModal);  
+        closeBtn.addEventListener('click', this.closeModal);
 
         const applyFilterBtn = document.getElementById('applyFilterBtn');
         applyFilterBtn.addEventListener('click', this.applyFilterSettings);
 
         const resetFilterBtn = document.getElementById('resetFilterBtn');
         resetFilterBtn.addEventListener('click', this.resetFilterSettings);
-       
-        
 
         this.genres = await MovieService.initializeGenres();
         const genreWithFilter = document.getElementById('genreWithFilter');
@@ -93,14 +90,14 @@ export default class FilterUI {
             genreWithout: document.getElementById('genreWithoutFilter').value,
             yearFrom: document.getElementById('yearFromFilter').value,
             yearTo: document.getElementById('yearToFilter').value,
-        }
+        };
     }
 
     resetFilterSettings() {
-        document.getElementById('genreWithFilter').value = "";
-        document.getElementById('genreWithoutFilter').value = "";
-        document.getElementById('yearFromFilter').value = "";
-        document.getElementById('yearToFilter').value = "";
-        this.movieUI.applyFilter(null);       
+        document.getElementById('genreWithFilter').value = '';
+        document.getElementById('genreWithoutFilter').value = '';
+        document.getElementById('yearFromFilter').value = '';
+        document.getElementById('yearToFilter').value = '';
+        this.movieUI.applyFilter(null);
     }
 }

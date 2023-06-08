@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Movie Page</title>
         <link rel="stylesheet" href="styles/styles.css" />
-        <link rel="shortcut icon" href="images/movies.png" type="image/x-icon">
+        <link rel="shortcut icon" href="images/movies.png" type="image/x-icon" />
     </head>
     <body>
         <div class="button-container">
@@ -14,36 +14,32 @@
             <button id="favoritesBtn" class="button">FAVORITES</button>
             <button id="filterBtn" class="button">FILTER</button>
             <button id="logInBtn" class="button">LOG IN</button>
-            <button id="logOutBtn" class="button">LOG OUT</button>           
+            <button id="logOutBtn" class="button">LOG OUT</button>
         </div>
-        
-        <div id="moviesContainer"></div>  
-        
 
-        
+        <div id="moviesContainer"></div>
+
         <div id="movieModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <div id="movieDetails"></div>
             </div>
         </div>
-        
+
         <div id="filterModal" class="modal">
             <div class="modal-content">
                 <span id="filterCloseBtn" class="close">&times;</span>
-                <h2>Filter Settings</h2>                
+                <h2>Filter Settings</h2>
                 <button id="applyFilterBtn" class="button">Apply Filter</button>
             </div>
         </div>
 
         <div id="movie-info" class="footer">
-            <p>Number of films: <span id="movie-count"></span></p>            
+            <p>Number of films: <span id="movie-count"></span></p>
             <div id="paginationContainer"></div>
-            <p>Number of pages: <span id="page-count"></span></p>            
+            <p>Number of pages: <span id="page-count"></span></p>
         </div>
-        
 
         <script type="module" src="./src/main.js"></script>
-
     </body>
 </html>
