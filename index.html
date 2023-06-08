@@ -10,13 +10,17 @@
     <body>
         <div class="button-container">
             <button id="homeBtn" class="button">HOME</button>
+            <button id="watchListBtn" class="button">WATCH LIST</button>
+            <button id="favoritesBtn" class="button">FAVORITES</button>
             <button id="filterBtn" class="button">FILTER</button>
+            <button id="logInBtn" class="button">LOG IN</button>
+            <button id="logOutBtn" class="button">LOG OUT</button>           
         </div>
         
-        <div id="moviesContainer"></div>
-        <div id="paginationContainer"></div>
+        <div id="moviesContainer"></div>  
+        
 
-        <!-- Modal -->
+        
         <div id="movieModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -27,11 +31,17 @@
         <div id="filterModal" class="modal">
             <div class="modal-content">
                 <span id="filterCloseBtn" class="close">&times;</span>
-                <h2>Filter Settings</h2>
-                <!-- Add your filter settings and buttons here -->
+                <h2>Filter Settings</h2>                
                 <button id="applyFilterBtn" class="button">Apply Filter</button>
             </div>
         </div>
+
+        <div id="movie-info" class="footer">
+            <p>Number of films: <span id="movie-count"></span></p>            
+            <div id="paginationContainer"></div>
+            <p>Number of pages: <span id="page-count"></span></p>            
+        </div>
+        
 
         <script type="module" src="./src/main.js"></script>
 

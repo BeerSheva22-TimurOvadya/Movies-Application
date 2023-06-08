@@ -8,6 +8,7 @@ export default class FilterUI {
         this.applyFilterSettings = this.applyFilterSettings.bind(this); // bind this to applyFilterSettings
         this.resetFilterSettings = this.resetFilterSettings.bind(this); // bind this to resetFilterSettings
         this.initializeFilterUI();
+        
     }
 
     openModal() {

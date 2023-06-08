@@ -7,6 +7,7 @@ export default class MovieUI {
     this.movieModal = document.getElementById(movieModalId);
     this.paginationUI = paginationUI;
     this.closeModal = this.closeModal.bind(this);
+    this.pageAndMoveInfo();
 }
 
     async displayMovies(movies) {
@@ -59,9 +60,14 @@ export default class MovieUI {
 
     async applyFilter(filter) {
         this.filter = filter;
+        if(filter === null) {
+            const data = await MovieService.fetchMovies(START_PAGE);
+            return;
+        }
         const data = await MovieService.fetchFilteredMovies(START_PAGE, this.filter);
         this.displayMovies(data.results);
         this.paginationUI.displayPagination(START_PAGE, data.total_pages);
+        this.updateMovieInfo(data.total_results, data.total_pages)
     }
 
     async navigateToPage(pageNumber, totalPages) {
@@ -74,9 +80,22 @@ export default class MovieUI {
             }
             this.displayMovies(data.results);
             this.paginationUI.displayPagination(pageNumber, data.total_pages);
+            this.updateMovieInfo(data.total_results, data.total_pages);
             window.scrollTo(0, 0);
         } else {
             window.alert(`Invalid page number. Enter a number between 1 and ${totalPages}`);
         }
+    }
+    async pageAndMoveInfo() {
+        const data = await MovieService.fetchMovies(START_PAGE);
+        this.updateMovieInfo(data.total_results, data.total_pages);
+    }
+
+    updateMovieInfo(movieCount, pageCount) {
+        const movieCountElement = document.getElementById('movie-count');
+        const pageCountElement = document.getElementById('page-count');
+
+        movieCountElement.textContent = movieCount;
+        pageCountElement.textContent = pageCount;
     }
 }
