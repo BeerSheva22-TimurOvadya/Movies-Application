@@ -1,4 +1,4 @@
-import { MOVIE_IMAGE_URL } from '../config/config.js';
+import { MOVIE_IMAGE_URL, START_PAGE } from '../config/config.js';
 import MovieService from '../service/moviesService.js';
 
 export default class MovieUI {
@@ -57,14 +57,26 @@ export default class MovieUI {
         this.movieModal.style.display = "none";
     }
 
+    async applyFilter(filter) {
+        this.filter = filter;
+        const data = await MovieService.fetchFilteredMovies(START_PAGE, this.filter);
+        this.displayMovies(data.results);
+        this.paginationUI.displayPagination(START_PAGE, data.total_pages);
+    }
+
     async navigateToPage(pageNumber, totalPages) {
-      if (pageNumber >= 1 && pageNumber <= totalPages) {
-          const data = await MovieService.fetchMovies(pageNumber);
-          this.displayMovies(data.results);
-          this.paginationUI.displayPagination(pageNumber, data.total_pages);
-          window.scrollTo(0, 0);
-      } else {
-          window.alert(`Invalid page number. Enter a number between 1 and ${totalPages}`);
-      }
-  }
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+            let data;
+            if(this.filter) {
+                data = await MovieService.fetchFilteredMovies(pageNumber, this.filter);
+            } else {
+                data = await MovieService.fetchMovies(pageNumber);
+            }
+            this.displayMovies(data.results);
+            this.paginationUI.displayPagination(pageNumber, data.total_pages);
+            window.scrollTo(0, 0);
+        } else {
+            window.alert(`Invalid page number. Enter a number between 1 and ${totalPages}`);
+        }
+    }
 }

@@ -2,14 +2,14 @@ import MovieService from './service/moviesService.js';
 import MovieUI from './ui/MovieUI.js';
 import FilterUI from './ui/FilterUI.js';
 import PaginationUI from './ui/PaginationUI.js';
+import {START_PAGE} from './config/config.js'
 
-const START_PAGE = 1;
 
 document.addEventListener('DOMContentLoaded', async () => {
     const paginationUI = new PaginationUI('paginationContainer');
     const movieUI = new MovieUI('moviesContainer', 'movieModal', paginationUI);
     paginationUI.setMovieUI(movieUI);
-    const filterUI = new FilterUI('filterModal');
+    const filterUI = new FilterUI('filterModal', movieUI);
     
 
     const movies = await MovieService.fetchMovies(START_PAGE);

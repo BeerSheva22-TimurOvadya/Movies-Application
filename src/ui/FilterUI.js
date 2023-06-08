@@ -1,8 +1,12 @@
+import MovieService from '../service/moviesService.js';
 export default class FilterUI {
-    constructor(filterModalId) {
+    constructor(filterModalId, movieUI) {
         this.filterModal = document.getElementById(filterModalId);
+        this.movieUI = movieUI; // save movieUI reference
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.applyFilterSettings = this.applyFilterSettings.bind(this); // bind this to applyFilterSettings
+        this.resetFilterSettings = this.resetFilterSettings.bind(this); // bind this to resetFilterSettings
         this.initializeFilterUI();
     }
 
@@ -14,7 +18,7 @@ export default class FilterUI {
         this.filterModal.style.display = 'none';
     }
 
-    initializeFilterUI() {
+    async initializeFilterUI() {
         this.filterModal.innerHTML = `
         <div class="modal-content">
             <span id="filterCloseBtn" class="close">&times;</span>
@@ -56,16 +60,45 @@ export default class FilterUI {
 
         const resetFilterBtn = document.getElementById('resetFilterBtn');
         resetFilterBtn.addEventListener('click', this.resetFilterSettings);
+       
+        
+
+        this.genres = await MovieService.initializeGenres();
+        const genreWithFilter = document.getElementById('genreWithFilter');
+        const genreWithoutFilter = document.getElementById('genreWithoutFilter');
+
+        Object.entries(this.genres).forEach(([id, name]) => {
+            const option = document.createElement('option');
+            option.value = id;
+            option.innerText = name;
+
+            const optionWith = option.cloneNode(true);
+            genreWithFilter.appendChild(optionWith);
+
+            const optionWithout = option.cloneNode(true);
+            genreWithoutFilter.appendChild(optionWithout);
+        });
     }
 
     applyFilterSettings() {
-        // Handle the filter settings and apply them
-        console.log('Filter settings applied');
-        return true;
+        this.filter = this.getFilterSettings();
+        this.movieUI.applyFilter(this.filter);
+    }
+
+    getFilterSettings() {
+        return {
+            genreWith: document.getElementById('genreWithFilter').value,
+            genreWithout: document.getElementById('genreWithoutFilter').value,
+            yearFrom: document.getElementById('yearFromFilter').value,
+            yearTo: document.getElementById('yearToFilter').value,
+        }
     }
 
     resetFilterSettings() {
-        // Handle the filter settings and apply them
-        console.log('Filter settings reseted');
+        document.getElementById('genreWithFilter').value = "";
+        document.getElementById('genreWithoutFilter').value = "";
+        document.getElementById('yearFromFilter').value = "";
+        document.getElementById('yearToFilter').value = "";
+        console.log('Filter settings reset');
     }
 }
