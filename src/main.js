@@ -1,4 +1,4 @@
-import MovieService from './service/MoviesService.js';
+import MovieService from './service/moviesService.js';
 import MovieUI from './ui/MovieUI.js';
 import FilterUI from './ui/FilterUI.js';
 import PaginationUI from './ui/PaginationUI.js';

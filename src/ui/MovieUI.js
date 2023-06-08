@@ -1,5 +1,5 @@
 import { MOVIE_IMAGE_URL } from '../config/config.js';
-import MovieService from '../service/MoviesService.js';
+import MovieService from '../service/moviesService.js';
 
 export default class MovieUI {
   constructor(moviesContainerId, movieModalId, paginationUI) {
