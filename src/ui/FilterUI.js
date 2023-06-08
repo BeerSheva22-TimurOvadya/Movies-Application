@@ -8,7 +8,6 @@ export default class FilterUI {
         this.applyFilterSettings = this.applyFilterSettings.bind(this); // bind this to applyFilterSettings
         this.resetFilterSettings = this.resetFilterSettings.bind(this); // bind this to resetFilterSettings
         this.initializeFilterUI();
-        
     }
 
     openModal() {
@@ -116,12 +115,20 @@ export default class FilterUI {
                 genreSelect.appendChild(option);
             }
         });
+
+
     }
 
     applyFilterSettings() {
-        this.filter = this.getFilterSettings();
-        this.movieUI.applyFilter(this.filter);
-        this.closeModal();
+        const filterSettings = this.getFilterSettings();
+    
+        if (this.validateYearFilter(filterSettings.yearFrom, filterSettings.yearTo)) {
+            this.filter = filterSettings;
+            this.movieUI.applyFilter(this.filter);
+            this.closeModal();
+        } else {
+            alert('Invalid year filter. Please check the "Year From" and "Year To" inputs.');
+        }
     }
 
     getFilterSettings() {
@@ -139,6 +146,22 @@ export default class FilterUI {
         document.getElementById('yearFromFilter').value = '';
         document.getElementById('yearToFilter').value = '';
         this.movieUI.applyFilter(null);
-        
     }
+    validateYearFilter(yearFrom, yearTo) {
+        const from = parseInt(yearFrom, 10);
+        const to = parseInt(yearTo, 10);
+        const currentYear = new Date().getFullYear();
+    
+        if (isNaN(from) || isNaN(to)) {
+            return false;
+        }
+    
+        if (from < 1900 || from > currentYear || to < 1900 || to > currentYear) {
+            return false;
+        }
+    
+        return from <= to;
+    }
+
+ 
 }
