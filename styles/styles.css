@@ -8,13 +8,12 @@ body {
 }
 
 .footer {
-  height: 30px; 
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 10px;
-  box-sizing: border-box;
+  margin: 5px auto;
+  padding: 10px 20px;
   background-color: #007BFF;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 #moviesContainer {
@@ -23,6 +22,8 @@ body {
   grid-gap: 15px;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
+
+
 
 .button-container {
   display: flex;
