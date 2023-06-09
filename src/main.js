@@ -16,6 +16,10 @@ async function main() {
 
     document.getElementById('homeBtn').addEventListener('click', homeHandler);
     document.getElementById('filterBtn').addEventListener('click', filterUI.openModal);
+
+    document.getElementById('watchListBtn').addEventListener('click', () => movieUI.displayWatchlist());    
+    document.getElementById('favoritesBtn').addEventListener('click', () => movieUI.displayFavorites());
+    
 }
 
 async function homeHandler() {

@@ -1,4 +1,460 @@
 {
-    "watchList": [],
-    "favorites": []
+  "watchList": [
+    {
+      "adult": false,
+      "backdrop_path": "/nGxUxi3PfXDRm7Vg95VBNgNM8yc.jpg",
+      "genre_ids": [
+        28,
+        12,
+        16,
+        878
+      ],
+      "id": 569094,
+      "original_language": "en",
+      "original_title": "Spider-Man: Across the Spider-Verse",
+      "overview": "After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse, where he encounters the Spider Society, a team of Spider-People charged with protecting the Multiverse’s very existence. But when the heroes clash on how to handle a new threat, Miles finds himself pitted against the other Spiders and must set out on his own to save those he loves most.",
+      "popularity": 2860.755,
+      "poster_path": "/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+      "release_date": "2023-05-31",
+      "title": "Spider-Man: Across the Spider-Verse",
+      "video": false,
+      "vote_average": 8.8,
+      "vote_count": 925
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/5rYnygKCkmqWuMv1O5yAnzGF8gV.jpg",
+      "genre_ids": [
+        12,
+        878,
+        28
+      ],
+      "id": 339964,
+      "original_language": "en",
+      "original_title": "Valerian and the City of a Thousand Planets",
+      "overview": "In the 28th century, Valerian and Laureline are special operatives charged with keeping order throughout the human territories. On assignment from the Minister of Defense, the two undertake a mission to Alpha, an ever-expanding metropolis where species from across the universe have converged over centuries to share knowledge, intelligence, and cultures. At the center of Alpha is a mysterious dark force which threatens the peaceful existence of the City of a Thousand Planets, and Valerian and Laureline must race to identify the menace and safeguard not just Alpha, but the future of the universe.",
+      "popularity": 56.951,
+      "poster_path": "/jfIpMh79fGRqYJ6PwZLCntzgxlF.jpg",
+      "release_date": "2017-07-20",
+      "title": "Valerian and the City of a Thousand Planets",
+      "video": false,
+      "vote_average": 6.6,
+      "vote_count": 6834
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/nVodCGKYLpqNC8YwQAbivKlWCgZ.jpg",
+      "genre_ids": [
+        28,
+        12,
+        14
+      ],
+      "id": 293167,
+      "original_language": "en",
+      "original_title": "Kong: Skull Island",
+      "overview": "Explore the mysterious and dangerous home of the king of the apes as a team of explorers ventures deep inside the treacherous, primordial island.",
+      "popularity": 40.94,
+      "poster_path": "/r2517Vz9EhDhj88qwbDVj8DCRZN.jpg",
+      "release_date": "2017-03-08",
+      "title": "Kong: Skull Island",
+      "video": false,
+      "vote_average": 6.5,
+      "vote_count": 9528
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/4t0oBFrJyweYPt0hocW6RUa0b6H.jpg",
+      "genre_ids": [
+        28,
+        80,
+        53
+      ],
+      "id": 385687,
+      "original_language": "en",
+      "original_title": "Fast X",
+      "overview": "Over many missions and against impossible odds, Dom Toretto and his family have outsmarted, out-nerved and outdriven every foe in their path. Now, they confront the most lethal opponent they've ever faced: A terrifying threat emerging from the shadows of the past who's fueled by blood revenge, and who is determined to shatter this family and destroy everything—and everyone—that Dom loves, forever.",
+      "popularity": 2177.081,
+      "poster_path": "/fiVW06jE7z9YnO4trhaMEdclSiC.jpg",
+      "release_date": "2023-05-17",
+      "title": "Fast X",
+      "video": false,
+      "vote_average": 7.2,
+      "vote_count": 885
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/1lWeIA03iGXTlDv0yzsN0wUdT9T.jpg",
+      "genre_ids": [
+        27
+      ],
+      "id": 215,
+      "original_language": "en",
+      "original_title": "Saw II",
+      "overview": "When a new murder victim is discovered with all the signs of Jigsaw's hand, Detective Eric Matthews begins a full investigation and apprehends Jigsaw with little effort. But for Jigsaw, getting caught is just another part of his plan. Eight more of his victims are already fighting for their lives and now it's time for Matthews to join the game.",
+      "popularity": 35.637,
+      "poster_path": "/5UzpxfSl6b8e87CDKkg6accRc0u.jpg",
+      "release_date": "2005-10-28",
+      "title": "Saw II",
+      "video": false,
+      "vote_average": 6.6,
+      "vote_count": 4639
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/cjRUhKyt2Jo3V1KNzc5tpPNfccG.jpg",
+      "genre_ids": [
+        14,
+        878,
+        28,
+        12
+      ],
+      "id": 320288,
+      "original_language": "en",
+      "original_title": "Dark Phoenix",
+      "overview": "The X-Men face their most formidable and powerful foe when one of their own, Jean Grey, starts to spiral out of control. During a rescue mission in outer space, Jean is nearly killed when she's hit by a mysterious cosmic force. Once she returns home, this force not only makes her infinitely more powerful, but far more unstable. The X-Men must now band together to save her soul and battle aliens that want to use Grey's new abilities to rule the galaxy.",
+      "popularity": 38.925,
+      "poster_path": "/kZv92eTc0Gg3mKxqjjDAM73z9cy.jpg",
+      "release_date": "2019-06-05",
+      "title": "Dark Phoenix",
+      "video": false,
+      "vote_average": 6,
+      "vote_count": 5789
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/AmR3JG1VQVxU8TfAvljUhfSFUOx.jpg",
+      "genre_ids": [
+        27,
+        878
+      ],
+      "id": 348,
+      "original_language": "en",
+      "original_title": "Alien",
+      "overview": "During its return to the earth, commercial spaceship Nostromo intercepts a distress signal from a distant planet. When a three-member team of the crew discovers a chamber containing thousands of eggs on the planet, a creature inside one of the eggs attacks an explorer. The entire crew is unaware of the impending nightmare set to descend upon them when the alien parasite planted inside its unfortunate host is birthed.",
+      "popularity": 47.878,
+      "poster_path": "/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg",
+      "release_date": "1979-05-25",
+      "title": "Alien",
+      "video": false,
+      "vote_average": 8.1,
+      "vote_count": 12863
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xEY0MV2jSQBz9iOJfCFvLTiPGMA.jpg",
+      "genre_ids": [
+        53,
+        80
+      ],
+      "id": 75656,
+      "original_language": "en",
+      "original_title": "Now You See Me",
+      "overview": "An FBI agent and an Interpol detective track a team of illusionists who pull off bank heists during their performances and reward their audiences with the money.",
+      "popularity": 35.594,
+      "poster_path": "/tWsNYbrqy1p1w6K9zRk0mSchztT.jpg",
+      "release_date": "2013-05-29",
+      "title": "Now You See Me",
+      "video": false,
+      "vote_average": 7.3,
+      "vote_count": 14478
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/l8ubUlfzlB5R2j9cJ3CN7tj0gmd.jpg",
+      "genre_ids": [
+        28,
+        10749,
+        16
+      ],
+      "id": 317442,
+      "original_language": "ja",
+      "original_title": "THE LAST -NARUTO THE MOVIE-",
+      "overview": "Two years after the events of the Fourth Great Ninja War, the moon that Hagoromo Otsutsuki created long ago to seal away the Gedo Statue begins to descend towards the world, threatening to become a meteor that would destroy everything on impact. Amidst this crisis, a direct descendant of Kaguya Otsutsuki named Toneri Otsutsuki attempts to kidnap Hinata Hyuga but ends up abducting her younger sister Hanabi. Naruto and his allies now mount a rescue mission before finding themselves embroiled in a final battle to decide the fate of everything.",
+      "popularity": 50.007,
+      "poster_path": "/bAQ8O5Uw6FedtlCbJTutenzPVKd.jpg",
+      "release_date": "2014-12-06",
+      "title": "The Last: Naruto the Movie",
+      "video": false,
+      "vote_average": 7.7,
+      "vote_count": 1676
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/9qcXIX4Sjv6oEKLvaLYJTabLqR.jpg",
+      "genre_ids": [
+        27,
+        53
+      ],
+      "id": 1020696,
+      "original_language": "en",
+      "original_title": "Play Dead",
+      "overview": "Criminology student Chloe fakes her own death to break into a morgue, in order to retrieve a piece of evidence that ties her younger brother to a crime gone wrong. Once inside, she discovers that a sadistic coroner is using the corpses for his sick and twisted business, and when he realises that Chloe still has a pulse, a terrifying game of cat and mouse ensues.",
+      "popularity": 278.821,
+      "poster_path": "/h5bwT8fuE6VIaOslRezwDiL2DxK.jpg",
+      "release_date": "2022-12-09",
+      "title": "Play Dead",
+      "video": false,
+      "vote_average": 6.5,
+      "vote_count": 65
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/8rIoyM6zYXJNjzGseT3MRusMPWl.jpg",
+      "genre_ids": [
+        12,
+        14,
+        35,
+        10751,
+        27
+      ],
+      "id": 531219,
+      "original_language": "en",
+      "original_title": "Roald Dahl's The Witches",
+      "overview": "In late 1967, a young orphaned boy goes to live with his loving grandma in the rural Alabama town of Demopolis. As the boy and his grandmother encounter some deceptively glamorous but thoroughly diabolical witches, she wisely whisks him away to a seaside resort. Regrettably, they arrive at precisely the same time that the world's Grand High Witch has gathered.",
+      "popularity": 55.36,
+      "poster_path": "/ht6EfsM5hrsUPSR4ReJQFDVU71F.jpg",
+      "release_date": "2020-10-26",
+      "title": "Roald Dahl's The Witches",
+      "video": false,
+      "vote_average": 6.4,
+      "vote_count": 2519
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/npCPnwDyWfQltGfIZKN6WqeUXGI.jpg",
+      "genre_ids": [
+        14,
+        12,
+        28
+      ],
+      "id": 57158,
+      "original_language": "en",
+      "original_title": "The Hobbit: The Desolation of Smaug",
+      "overview": "The Dwarves, Bilbo and Gandalf have successfully escaped the Misty Mountains, and Bilbo has gained the One Ring. They all continue their journey to get their gold back from the Dragon, Smaug.",
+      "popularity": 46.41,
+      "poster_path": "/xQYiXsheRCDBA39DOrmaw1aSpbk.jpg",
+      "release_date": "2013-12-11",
+      "title": "The Hobbit: The Desolation of Smaug",
+      "video": false,
+      "vote_average": 7.6,
+      "vote_count": 12017
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/fLhiNfHBTC2bncrQM4bgXqJh2Hv.jpg",
+      "genre_ids": [
+        878,
+        12,
+        28
+      ],
+      "id": 447365,
+      "original_language": "en",
+      "original_title": "Guardians of the Galaxy Vol. 3",
+      "overview": "Peter Quill, still reeling from the loss of Gamora, must rally his team around him to defend the universe along with protecting one of their own. A mission that, if not completed successfully, could quite possibly lead to the end of the Guardians as we know them.",
+      "popularity": 1015.262,
+      "poster_path": "/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg",
+      "release_date": "2023-05-03",
+      "title": "Guardians of the Galaxy Vol. 3",
+      "video": false,
+      "vote_average": 8.1,
+      "vote_count": 1868
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/gFiPQZh6W2qEVKYnAQjtq66qJqI.jpg",
+      "genre_ids": [
+        53,
+        18,
+        28
+      ],
+      "id": 1107872,
+      "original_language": "pl",
+      "original_title": "Dzień Matki",
+      "overview": "Nina, a former NATO special operations agent living in hiding, has to use all her deadly skills to rescue her son who has been kidnapped by ruthless gangsters. Finding Max is a double opportunity for her. A chance to feel the adrenaline rush again, and an opportunity to get back into the life of the son she had to abandon years ago.",
+      "popularity": 944.055,
+      "poster_path": "/wws9Z90DdZ7D0n3gdzFSZ6cntJi.jpg",
+      "release_date": "2023-05-24",
+      "title": "Mother's Day",
+      "video": false,
+      "vote_average": 5.8,
+      "vote_count": 86
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/374IQnRNSY3AeT2CLm9Y9IbrxoX.jpg",
+      "genre_ids": [
+        80
+      ],
+      "id": 691913,
+      "original_language": "el",
+      "original_title": "Το Σύνδρομο Της Χιονάτης",
+      "overview": "",
+      "popularity": 0.6,
+      "poster_path": "/ohwyw223uND3DtwdWcHTUW0RE4w.jpg",
+      "release_date": "2008-11-16",
+      "title": "Το Σύνδρομο Της Χιονάτης",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/4NdAMnBwSAaSsUjoXkcU5aW28RF.jpg",
+      "genre_ids": [
+        28,
+        80,
+        53
+      ],
+      "id": 273481,
+      "original_language": "en",
+      "original_title": "Sicario",
+      "overview": "An idealistic FBI agent is enlisted by a government task force to aid in the escalating war against drugs at the border area between the U.S. and Mexico.",
+      "popularity": 42.109,
+      "poster_path": "/lz8vNyXeidqqOdJW9ZjnDAMb5Vr.jpg",
+      "release_date": "2015-09-17",
+      "title": "Sicario",
+      "video": false,
+      "vote_average": 7.4,
+      "vote_count": 7620
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/kdbLf3aTQsEXqYlH9vA4fzmnSFz.jpg",
+      "genre_ids": [
+        10752,
+        18,
+        28
+      ],
+      "id": 228150,
+      "original_language": "en",
+      "original_title": "Fury",
+      "overview": "In the last months of World War II, as the Allies make their final push in the European theatre, a battle-hardened U.S. Army sergeant named 'Wardaddy' commands a Sherman tank called 'Fury' and its five-man crew on a deadly mission behind enemy lines. Outnumbered and outgunned, Wardaddy and his men face overwhelming odds in their heroic attempts to strike at the heart of Nazi Germany.",
+      "popularity": 70.952,
+      "poster_path": "/pfte7wdMobMF4CVHuOxyu6oqeeA.jpg",
+      "release_date": "2014-10-15",
+      "title": "Fury",
+      "video": false,
+      "vote_average": 7.5,
+      "vote_count": 10782
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/frYaBZwQlmYNrulugOmtOEh9d6H.jpg",
+      "genre_ids": [
+        18
+      ],
+      "id": 74308,
+      "original_language": "en",
+      "original_title": "Detachment",
+      "overview": "A chronicle of three weeks in the lives of several high school teachers, administrators and students through the eyes of substitute teacher, Henry Barthes. Henry roams from school to school, imparting modes of knowledge, but never staying long enough to form any semblance of sentient attachment.",
+      "popularity": 51.072,
+      "poster_path": "/5NYI1dfskJ8oKEbVgJlJE4txnZ2.jpg",
+      "release_date": "2011-04-24",
+      "title": "Detachment",
+      "video": false,
+      "vote_average": 7.6,
+      "vote_count": 1332
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/h5BT2aJlqBlsW07qhDLMX2IyLI9.jpg",
+      "genre_ids": [
+        878
+      ],
+      "id": 506072,
+      "original_language": "en",
+      "original_title": "Prospect",
+      "overview": "A teenage girl and her father travel to a remote alien moon, aiming to strike it rich. They've secured a contract to harvest a large deposit of the elusive gems hidden in the depths of the moon's toxic forest. But there are others roving the wilderness and the job quickly devolves into a fight to survive.",
+      "popularity": 25.021,
+      "poster_path": "/1HpAwszXLsD8GeypDzK0me7fPFA.jpg",
+      "release_date": "2018-10-02",
+      "title": "Prospect",
+      "video": false,
+      "vote_average": 6.2,
+      "vote_count": 690
+    }
+  ],
+  "favorites": [
+    {
+      "adult": false,
+      "backdrop_path": "/nGxUxi3PfXDRm7Vg95VBNgNM8yc.jpg",
+      "genre_ids": [
+        28,
+        12,
+        16,
+        878
+      ],
+      "id": 569094,
+      "original_language": "en",
+      "original_title": "Spider-Man: Across the Spider-Verse",
+      "overview": "After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse, where he encounters the Spider Society, a team of Spider-People charged with protecting the Multiverse’s very existence. But when the heroes clash on how to handle a new threat, Miles finds himself pitted against the other Spiders and must set out on his own to save those he loves most.",
+      "popularity": 2860.755,
+      "poster_path": "/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+      "release_date": "2023-05-31",
+      "title": "Spider-Man: Across the Spider-Verse",
+      "video": false,
+      "vote_average": 8.8,
+      "vote_count": 925
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/A5UrOppVdGHPfz1QnrOOdHV7G5A.jpg",
+      "genre_ids": [
+        28,
+        53,
+        27
+      ],
+      "id": 799379,
+      "original_language": "ko",
+      "original_title": "늑대사냥",
+      "overview": "While under heavily armed guard, the dangerous convicts aboard a cargo ship unite in a coordinated escape attempt that soon escalates into a bloody, all-out riot. But as the fugitives continue their brutal campaign of terror, they soon discover that not even the most vicious among them is safe from the horror they unknowingly unleashed from the darkness below deck.",
+      "popularity": 799.705,
+      "poster_path": "/dniWicB6fa7NvpGbguxWlNPMc5f.jpg",
+      "release_date": "2022-09-21",
+      "title": "Project Wolf Hunting",
+      "video": false,
+      "vote_average": 6.4,
+      "vote_count": 154
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/dlsclk2cPqWfK9Dvo1A67xAcAzz.jpg",
+      "genre_ids": [
+        28,
+        18,
+        10752
+      ],
+      "id": 1098110,
+      "original_language": "de",
+      "original_title": "Blood & Gold",
+      "overview": "At the end of World War II, a German soldier is looking for his daughter while an SS troop is looking for a Jewish treasure.",
+      "popularity": 916.461,
+      "poster_path": "/xayG1dbIjJkmvimekx6TNrMOXmA.jpg",
+      "release_date": "2023-04-21",
+      "title": "Blood & Gold",
+      "video": false,
+      "vote_average": 6.7,
+      "vote_count": 134
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/eTvN54pd83TrSEOz6wbsXEJktCV.jpg",
+      "genre_ids": [
+        10752,
+        28,
+        53
+      ],
+      "id": 882569,
+      "original_language": "en",
+      "original_title": "Guy Ritchie's The Covenant",
+      "overview": "During the war in Afghanistan, a local interpreter risks his own life to carry an injured sergeant across miles of grueling terrain.",
+      "popularity": 917.407,
+      "poster_path": "/kVG8zFFYrpyYLoHChuEeOGAd6Ru.jpg",
+      "release_date": "2023-04-19",
+      "title": "Guy Ritchie's The Covenant",
+      "video": false,
+      "vote_average": 7.6,
+      "vote_count": 482
+    }
+  ]
 }

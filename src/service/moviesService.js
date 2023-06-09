@@ -44,4 +44,32 @@ export default class MovieService {
         }
         return data;
     }
+
+    static async addToWatchlist(movie) {
+        const url = 'http://localhost:3500/watchlist';
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(movie)
+        });
+        const data = await response.json();
+        return data;
+    }
+    
+    static    async addToFavorites(movie) {
+        const url = 'http://localhost:3500/favorites';
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(movie)
+        });
+        const data = await response.json();
+        return data;
+    }
+
+   
 }
