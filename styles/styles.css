@@ -34,6 +34,22 @@ body {
   margin-bottom: 10px;
 }
 
+#username-display {
+  top: 0;
+  right: 0;
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;  
+  border-radius: 5px;  
+  position: absolute;
+  font-weight: bold;
+}
+
+#username-display:empty {
+  display: none;
+}
+
 .button, .page-btn {
   margin: 5px;
   padding: 10px 20px;
@@ -106,6 +122,9 @@ body {
   padding-bottom: 10px;
   border-bottom: 1px solid #ddd;
 }
+
+
+
 
 .close, .closeLogin {
   color: #aaa;

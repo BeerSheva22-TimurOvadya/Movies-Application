@@ -1,10 +1,16 @@
 export default class AuthService {
+    // В классе AuthService после успешной аутентификации
     static async authenticate(username, password) {
         const response = await fetch('http://localhost:3500/users/');
         const data = await response.json();
 
         const user = data.find((user) => user.username === username && user.password === password);
-        return user !== undefined;
+        if (user !== undefined) {
+            localStorage.setItem('currentUser', username); // сохраняем имя пользователя
+            return true;
+        } else {
+            return false;
+        }
     }
 
     static async register(username, password) {
@@ -41,4 +47,15 @@ export default class AuthService {
             return false;
         }
     }
+
+    logOut() {
+        localStorage.removeItem('currentUser');    
+        document.getElementById('username-display').textContent = '';        
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+        // authUI.closeModal();
+
+    }   
+       
+      
 }

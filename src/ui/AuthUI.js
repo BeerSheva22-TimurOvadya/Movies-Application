@@ -42,6 +42,8 @@ export default class AuthUI {
     
         const result = await this.authHandler(username, password);
         if (result) {
+            // If the user is authenticated, update the username display
+            document.getElementById('username-display').textContent = username;
             this.closeModal();
         } else {
             alert('Failed to login. Please check your credentials.');

@@ -15,6 +15,7 @@ const filterUI = new FilterUI('filterModal', movieUI);
 async function main() {
     const movies = await MovieService.fetchMovies(START_PAGE);
     const authUI = new AuthUI('authModal', AuthService.authenticate, AuthService.register)  
+    const authService = new AuthService();
     movieUI.displayMovies(movies.results);
     paginationUI.displayPagination(START_PAGE, movies.total_pages);
 
@@ -28,9 +29,10 @@ async function main() {
     logInBtn.addEventListener('click', () => authUI.openModal());
 
     const logOutBtn = document.getElementById('logOutBtn');
-    logOutBtn.addEventListener('click', () => {
-        // Logic for logging out
-    });
+    logOutBtn.addEventListener('click', () => authService.logOut());
+        
+        
+    
 }
 
 async function homeHandler() {
