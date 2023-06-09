@@ -46,7 +46,6 @@ export default class MovieService {
     }
 
     static async addToWatchlist(movie) {
-       
         const response = await fetch(LOCALHOST_URL_WATCHLIST, {
             method: 'POST',
             headers: {
@@ -54,12 +53,20 @@ export default class MovieService {
             },
             body: JSON.stringify(movie)
         });
+    
+        if (!response.ok) {
+            if (response.status === 500) {
+                window.alert('This movie is already in the Watchlist');
+                return null;
+            }
+            throw new Error(`Error: ${response.status}`);
+        }
+    
         const data = await response.json();
         return data;
     }
     
-    static    async addToFavorites(movie) {
-       
+    static async addToFavorites(movie) {
         const response = await fetch(LOCALHOST_URL_FAVORITES, {
             method: 'POST',
             headers: {
@@ -67,6 +74,15 @@ export default class MovieService {
             },
             body: JSON.stringify(movie)
         });
+    
+        if (!response.ok) {
+            if (response.status === 500) {
+                window.alert('This movie is already in the Favorites');
+                return null;
+            }
+            throw new Error(`Error: ${response.status}`);
+        }
+    
         const data = await response.json();
         return data;
     }
