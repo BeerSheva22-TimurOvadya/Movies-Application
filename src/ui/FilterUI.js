@@ -64,13 +64,11 @@ export default class FilterUI {
         this.genres = await MovieService.initializeGenres();
         const genreWithFilter = document.getElementById('genreWithFilter');
         const genreWithoutFilter = document.getElementById('genreWithoutFilter');
-
-        // Update available genres when a genre is selected in "With Genre" filter
+        
         genreWithFilter.addEventListener('change', () => {
             this.updateAvailableGenres(genreWithoutFilter, genreWithFilter.value);
         });
-
-        // Update available genres when a genre is selected in "Without Genre" filter
+        
         genreWithoutFilter.addEventListener('change', () => {
             this.updateAvailableGenres(genreWithFilter, genreWithoutFilter.value);
         });

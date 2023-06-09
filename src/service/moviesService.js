@@ -1,4 +1,4 @@
-import { API_KEY, BASE_URL } from '../config/config.js';
+import { API_KEY, BASE_URL, LOCALHOST_URL_FAVORITES, LOCALHOST_URL_WATCHLIST } from '../config/config.js';
 
 export default class MovieService {
     static async fetchMovies(page) {
@@ -46,8 +46,8 @@ export default class MovieService {
     }
 
     static async addToWatchlist(movie) {
-        const url = 'http://localhost:3500/watchlist';
-        const response = await fetch(url, {
+       
+        const response = await fetch(LOCALHOST_URL_WATCHLIST, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -59,8 +59,8 @@ export default class MovieService {
     }
     
     static    async addToFavorites(movie) {
-        const url = 'http://localhost:3500/favorites';
-        const response = await fetch(url, {
+       
+        const response = await fetch(LOCALHOST_URL_FAVORITES, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
