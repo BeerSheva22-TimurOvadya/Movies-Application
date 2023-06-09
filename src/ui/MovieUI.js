@@ -43,8 +43,8 @@ export default class MovieUI {
                     <p>Vote count: ${movie.vote_count}</p>
                     <p>Popularity: ${movie.popularity}</p>
                     <p>Language: ${movie.original_language}</p>
-                    <button id="watchlistBtn" class="button">Add to Watch List</button>
-                    <button id="favoritesBtn" class="button">Add to Favorites</button>
+                    <button id="addWatchlistBtn" class="button">Add to Watch List</button>
+                    <button id="addFavoritesBtn" class="button">Add to Favorites</button>
                 </div>
             </div>
         `;
