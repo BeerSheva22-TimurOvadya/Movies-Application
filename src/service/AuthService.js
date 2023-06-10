@@ -35,10 +35,11 @@ export default class AuthService {
         return saveData(LOCALHOST_URL_USERS, 'POST', user);
     }
 
-    static logOut() {
-        localStorage.removeItem('currentUser');
-        document.getElementById('username-display').textContent = '';
-        document.getElementById('username').value = '';
-        document.getElementById('password').value = '';
+    
+
+    static isLoggedIn() {       
+        return localStorage.getItem('currentUser') !== null
     }
+
+   
 }

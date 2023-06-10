@@ -2,6 +2,7 @@ import { MOVIE_IMAGE_URL, START_PAGE, LOCALHOST_URL_USERS } from '../config/conf
 import MovieService from '../service/moviesService.js';
 import ModalHandler from '../util/ModalHandler.js';
 import ButtonHandler from '../util/ButtonHandler.js';
+import AuthService from '../service/AuthService.js';
 
 export default class MovieUI {
     constructor(moviesContainerId, movieModalId, paginationUI) {
@@ -53,14 +54,24 @@ export default class MovieUI {
 
         this.movieModal.addCloseListener();
             
+        document.getElementById('addWatchlistBtn').addEventListener('click', () => {
+        if (!AuthService.isLoggedIn()) {
+            alert('Please log in to add to watch list.'); 
+        } else {
+            MovieService.addToWatchlist(movie);
+            this.movieModal.addCloseListener();
+        }
+    });
 
-        this.buttonHandler.addButtonListener('addWatchlistBtn', () =>
-            MovieService.addToWatchlist(movie), this.movieModal.addCloseListener(),            
-        );
+    document.getElementById('addFavoritesBtn').addEventListener('click', () => {
+        if (!AuthService.isLoggedIn()) {
+            alert('Please log in to add to favorites.'); 
+        } else {
+            MovieService.addToFavorites(movie);
+        }
+    });
 
-        this.buttonHandler.addButtonListener('addFavoritesBtn', () =>
-            MovieService.addToFavorites(movie),
-        );
+        
     }
 
     async applyFilter(filter) {
