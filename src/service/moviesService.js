@@ -46,45 +46,67 @@ export default class MovieService {
     }
 
     static async addToWatchlist(movie) {
-        const response = await fetch(LOCALHOST_URL_WATCHLIST, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(movie)
-        });
+        const currentUser = localStorage.getItem('currentUser');
     
-        if (!response.ok) {
-            if (response.status === 500) {
+        const response = await fetch(`http://localhost:3500/users/?username=${currentUser}`);
+        const data = await response.json();
+    
+        if (data.length > 0) {
+            const user = data[0];
+            if (user.watchList.find((m) => m.id === movie.id)) {
                 window.alert('This movie is already in the Watchlist');
                 return null;
             }
-            throw new Error(`Error: ${response.status}`);
+    
+            user.watchList.push(movie);
+    
+            const updateResponse = await fetch(`http://localhost:3500/users/${user.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+    
+            if (!updateResponse.ok) {
+                throw new Error(`Error: ${updateResponse.status}`);
+            }
+    
+            return movie;
         }
-    
-        const data = await response.json();
-        return data;
     }
-    
+
     static async addToFavorites(movie) {
-        const response = await fetch(LOCALHOST_URL_FAVORITES, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(movie)
-        });
+        const currentUser = localStorage.getItem('currentUser');
     
-        if (!response.ok) {
-            if (response.status === 500) {
+        const response = await fetch(`http://localhost:3500/users/?username=${currentUser}`);
+        const data = await response.json();
+    
+        if (data.length > 0) {
+            const user = data[0];
+            // Замените 'watchList' на 'favorites' ниже
+            if (user.favorites.find((m) => m.id === movie.id)) {
                 window.alert('This movie is already in the Favorites');
                 return null;
             }
-            throw new Error(`Error: ${response.status}`);
-        }
     
-        const data = await response.json();
-        return data;
+            // И здесь тоже замените 'watchList' на 'favorites'
+            user.favorites.push(movie);
+    
+            const updateResponse = await fetch(`http://localhost:3500/users/${user.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+    
+            if (!updateResponse.ok) {
+                throw new Error(`Error: ${updateResponse.status}`);
+            }
+    
+            return movie;
+        }
     }
 
    

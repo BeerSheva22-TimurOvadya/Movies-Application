@@ -30,6 +30,8 @@ export default class AuthService {
             id: nextId,
             username: username,
             password: password,
+            watchList: [],
+            favorites: []
         };
 
         // Save the new user to data.json via JSON Server

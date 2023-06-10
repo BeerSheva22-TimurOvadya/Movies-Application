@@ -74,7 +74,7 @@ export default class MovieUI {
 
     async applyFilter(filter) {
         this.filter = filter;
-        
+
         // if (filter === null) {
         //     const data = await MovieService.fetchMovies(START_PAGE);
         //     return;
@@ -82,7 +82,6 @@ export default class MovieUI {
         const data = await MovieService.fetchFilteredMovies(START_PAGE, this.filter);
         this.displayMovies(data.results);
         this.paginationUI.displayPagination(START_PAGE, data.total_pages);
-        
     }
 
     async navigateToPage(pageNumber, totalPages) {
@@ -110,45 +109,70 @@ export default class MovieUI {
         }
     }
 
-    async displayMovieList(url, removeFromListMethod, buttonId, buttonText) {
-        const response = await fetch(url);
-        const movies = await response.json();
-        const genres = await MovieService.initializeGenres();
-        this.moviesContainer.innerHTML = '';
-        movies.forEach((movie) => {
-            this.createMovieCard(movie, genres, () =>
-                this.displayMovieDetailsWithRemoveButton(
-                    movie,
-                    removeFromListMethod,
-                    buttonId,
-                    buttonText,
-                ),
-            );
-        });
+    async displayMovieListFromUser(removeFromListMethod, buttonId, buttonText, listName) {
+        const currentUser = localStorage.getItem('currentUser');
+        const response = await fetch(`http://localhost:3500/users/?username=${currentUser}`);
+        const userData = await response.json();
+    
+        if (userData.length > 0) {
+            const user = userData[0];
+            const movies = user[listName];
+    
+            const genres = await MovieService.initializeGenres();
+            this.moviesContainer.innerHTML = '';
+            if (movies) {
+                movies.forEach((movie) => {
+                    this.createMovieCard(movie, genres, () =>
+                        this.displayMovieDetailsWithRemoveButton(
+                            movie,
+                            removeFromListMethod,
+                            buttonId,
+                            buttonText,
+                        ),
+                    );
+                });
+            }
+        }
     }
-
+    
     displayWatchlist() {
-        this.displayMovieList(
-            LOCALHOST_URL_WATCHLIST,
-            this.removeFromList.bind(this, LOCALHOST_URL_WATCHLIST),
+        this.displayMovieListFromUser(
+            this.removeFromList.bind(this, 'watchList'),
             'removeFromWatchlistBtn',
             'Remove from Watchlist',
+            'watchList',
         );
     }
-
+    
     displayFavorites() {
-        this.displayMovieList(
-            LOCALHOST_URL_FAVORITES,
-            this.removeFromList.bind(this, LOCALHOST_URL_FAVORITES),
+        this.displayMovieListFromUser(
+            this.removeFromList.bind(this, 'favorites'),
             'removeFromFavoritesBtn',
             'Remove from Favorites',
+            'favorites',
         );
     }
-    async removeFromList(url, movieId) {
-        const response = await fetch(url + movieId, {
-            method: 'DELETE',
-        });
-        return response.ok;
+    async removeFromList(listName, movieId) {
+        const currentUser = localStorage.getItem('currentUser');
+        const response = await fetch(`http://localhost:3500/users/?username=${currentUser}`);
+        const userData = await response.json();
+    
+        if (userData.length > 0) {
+            const user = userData[0];
+            user[listName] = user[listName].filter(movie => movie.id !== movieId);
+    
+            const updateResponse = await fetch(`http://localhost:3500/users/${user.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+    
+            if (!updateResponse.ok) {
+                throw new Error(`Error: ${updateResponse.status}`);
+            }
+        }
     }
 
     displayMovieDetailsWithRemoveButton(movie, removeFromListMethod, buttonId, buttonText) {
