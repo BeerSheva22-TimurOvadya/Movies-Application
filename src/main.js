@@ -19,7 +19,6 @@ async function main() {
 
     document.getElementById('homeBtn').addEventListener('click', homeHandler);
 
-
     document
         .getElementById('filterBtn')
         .addEventListener('click', () => filterUI.filterModal.displayModal());

@@ -20,5 +20,3 @@ export async function saveData(url, method, body) {
     }
     return response;
 }
-
-
