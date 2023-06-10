@@ -6,7 +6,7 @@ export default class PaginationUI {
     }
 
     displayPagination(currentPage, totalPages) {
-        this.paginationContainer.innerHTML = ''; // Clear the container
+        this.paginationContainer.innerHTML = ''; 
 
         const prevBtn = createButton('Previous', currentPage > 1, () =>
             this.movieUI.navigateToPage(currentPage - 1, totalPages),

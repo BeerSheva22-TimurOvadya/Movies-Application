@@ -47,6 +47,26 @@
           "video": false,
           "vote_average": 7.8,
           "vote_count": 4488
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/woJbg7ZqidhpvqFGGMRhWQNoxwa.jpg",
+          "genre_ids": [
+            28,
+            12,
+            878
+          ],
+          "id": 667538,
+          "original_language": "en",
+          "original_title": "Transformers: Rise of the Beasts",
+          "overview": "A '90s globetrotting adventure that introduces the Maximals, Predacons, and Terrorcons to the existing battle on earth between Autobots and Decepticons.",
+          "popularity": 1643.4,
+          "poster_path": "/gPbM0MK8CP8A174rmUwGsADNYKD.jpg",
+          "release_date": "2023-06-06",
+          "title": "Transformers: Rise of the Beasts",
+          "video": false,
+          "vote_average": 7.7,
+          "vote_count": 100
         }
       ],
       "favorites": [
@@ -99,8 +119,66 @@
           "video": false,
           "vote_average": 7.8,
           "vote_count": 4488
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/7J6CVLCme3t6GIP18CGHp6OyQIf.jpg",
+          "genre_ids": [
+            35,
+            16,
+            12,
+            28
+          ],
+          "id": 404250,
+          "original_language": "ja",
+          "original_title": "金色のガッシュベル!! 101番目の魔物",
+          "overview": "While the battle to determine the next king of the demon realm has often been fraught, the rules were always clear.  100 demon children partnered with 100 humans would challenge each other, using 100 magical books.  What none of them knew was that there was a 101st magical book, powerful enough to stop any of the others.  Gash and Kiyomaro must begin a journey that will take them into the demon realm to confront the mysteries of Gash's past.  But will they escape in time to help their friends in a battle with a seemingly unstoppable enemy?",
+          "popularity": 64.784,
+          "poster_path": "/eW250uuZW49GTJ5ZH0e3kNesWSd.jpg",
+          "release_date": "2004-07-09",
+          "title": "Zatch Bell! 101st Devil",
+          "video": false,
+          "vote_average": 7.2,
+          "vote_count": 44
         }
       ],
+      "favorites": [
+        {
+          "adult": false,
+          "backdrop_path": "/9n2tJBplPbgR2ca05hS5CKXwP2c.jpg",
+          "genre_ids": [
+            16,
+            10751,
+            12,
+            14,
+            35
+          ],
+          "id": 502356,
+          "original_language": "en",
+          "original_title": "The Super Mario Bros. Movie",
+          "overview": "While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi.",
+          "popularity": 2947.91,
+          "poster_path": "/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",
+          "release_date": "2023-04-05",
+          "title": "The Super Mario Bros. Movie",
+          "video": false,
+          "vote_average": 7.8,
+          "vote_count": 4488
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "username": "456",
+      "password": "456",
+      "watchList": [],
+      "favorites": []
+    },
+    {
+      "id": 4,
+      "username": "Admin",
+      "password": "333",
+      "watchList": [],
       "favorites": []
     }
   ]

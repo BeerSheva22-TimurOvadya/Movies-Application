@@ -1,113 +1,70 @@
-import { API_KEY, BASE_URL, LOCALHOST_URL_FAVORITES, LOCALHOST_URL_WATCHLIST } from '../config/config.js';
+import { API_KEY, BASE_URL, LOCALHOST_URL_USERS } from '../config/config.js';
+import { fetchData, saveData } from './fetchService.js';
 
 export default class MovieService {
-    static async fetchMovies(page) {
+    static fetchMovies(page) {
         const url = `${BASE_URL}movie/popular?language=en-US&page=${page}&api_key=${API_KEY}`;
-        const response = await fetch(url);
-        const data = await response.json();
-        if (data.errors) {
-            throw data;
-        }
-        return data;
+        return fetchData(url);
     }
 
     static async fetchGenres() {
         const url = `${BASE_URL}genre/movie/list?language=en&api_key=${API_KEY}`;
-        const response = await fetch(url);
-        const data = await response.json();
-        if (data.errors) {
-            throw data;
-        }
+        const data = await fetchData(url);
         return data.genres.reduce((acc, genre) => ({ ...acc, [genre.id]: genre.name }), {});
     }
 
-    static async initializeGenres() {
-        try {
-            return await this.fetchGenres();
-        } catch (error) {
-            console.error(error);
-        }
+    static initializeGenres() {
+        return this.fetchGenres();
     }
-    static async fetchFilteredMovies(page, filter) {
+
+    static fetchFilteredMovies(page, filter) {
         let url = `${BASE_URL}discover/movie?language=en-US&sort_by=popularity.desc&page=${page}&api_key=${API_KEY}`;
 
-        // Apply filter parameters if available
-        if (filter && filter.genreWith) url += `&with_genres=${filter.genreWith}`;
-        if (filter && filter.genreWithout) url += `&without_genres=${filter.genreWithout}`;
-        if (filter && filter.yearFrom) url += `&primary_release_date.gte=${filter.yearFrom}-01-01`;
-        if (filter && filter.yearTo) url += `&primary_release_date.lte=${filter.yearTo}-12-31`;
-
-        const response = await fetch(url);
-        const data = await response.json();
-        if (data.errors) {
-            throw data;
+        if (filter) {
+            url += Object.entries(filter)
+                .map(([key, value]) => {
+                    switch (key) {
+                        case 'genreWith':
+                            return `&with_genres=${value}`;
+                        case 'genreWithout':
+                            return `&without_genres=${value}`;
+                        case 'yearFrom':
+                            return `&primary_release_date.gte=${value}-01-01`;
+                        case 'yearTo':
+                            return `&primary_release_date.lte=${value}-12-31`;
+                        default:
+                            return '';
+                    }
+                })
+                .join('');
         }
-        return data;
+
+        return fetchData(url);
     }
 
-    static async addToWatchlist(movie) {
+    static async updateUserList(movie, listName, message) {
         const currentUser = localStorage.getItem('currentUser');
-    
-        const response = await fetch(`http://localhost:3500/users/?username=${currentUser}`);
-        const data = await response.json();
-    
+        const url = `${LOCALHOST_URL_USERS}?username=${currentUser}`;
+        const data = await fetchData(url);
+
         if (data.length > 0) {
             const user = data[0];
-            if (user.watchList.find((m) => m.id === movie.id)) {
-                window.alert('This movie is already in the Watchlist');
+            if (user[listName].find((m) => m.id === movie.id)) {
+                window.alert(message);
                 return null;
             }
-    
-            user.watchList.push(movie);
-    
-            const updateResponse = await fetch(`http://localhost:3500/users/${user.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(user)
-            });
-    
-            if (!updateResponse.ok) {
-                throw new Error(`Error: ${updateResponse.status}`);
-            }
-    
+            user[listName].push(movie);
+
+            await saveData(`${LOCALHOST_URL_USERS}${user.id}`, 'PUT', user);
             return movie;
         }
     }
 
-    static async addToFavorites(movie) {
-        const currentUser = localStorage.getItem('currentUser');
-    
-        const response = await fetch(`http://localhost:3500/users/?username=${currentUser}`);
-        const data = await response.json();
-    
-        if (data.length > 0) {
-            const user = data[0];
-            // Замените 'watchList' на 'favorites' ниже
-            if (user.favorites.find((m) => m.id === movie.id)) {
-                window.alert('This movie is already in the Favorites');
-                return null;
-            }
-    
-            // И здесь тоже замените 'watchList' на 'favorites'
-            user.favorites.push(movie);
-    
-            const updateResponse = await fetch(`http://localhost:3500/users/${user.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(user)
-            });
-    
-            if (!updateResponse.ok) {
-                throw new Error(`Error: ${updateResponse.status}`);
-            }
-    
-            return movie;
-        }
+    static addToWatchlist(movie) {
+        return this.updateUserList(movie, 'watchList', 'This movie is already in the Watchlist');
     }
 
-   
+    static addToFavorites(movie) {
+        return this.updateUserList(movie, 'favorites', 'This movie is already in the Favorites');
+    }
 }

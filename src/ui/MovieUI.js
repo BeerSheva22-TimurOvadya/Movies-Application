@@ -1,8 +1,7 @@
 import {
     MOVIE_IMAGE_URL,
     START_PAGE,
-    LOCALHOST_URL_WATCHLIST,
-    LOCALHOST_URL_FAVORITES,
+    LOCALHOST_URL_USERS
 } from '../config/config.js';
 import MovieService from '../service/moviesService.js';
 
@@ -111,7 +110,7 @@ export default class MovieUI {
 
     async displayMovieListFromUser(removeFromListMethod, buttonId, buttonText, listName) {
         const currentUser = localStorage.getItem('currentUser');
-        const response = await fetch(`http://localhost:3500/users/?username=${currentUser}`);
+        const response = await fetch(`${LOCALHOST_URL_USERS}?username=${currentUser}`);
         const userData = await response.json();
     
         if (userData.length > 0) {
@@ -154,14 +153,14 @@ export default class MovieUI {
     }
     async removeFromList(listName, movieId) {
         const currentUser = localStorage.getItem('currentUser');
-        const response = await fetch(`http://localhost:3500/users/?username=${currentUser}`);
+        const response = await fetch(`${LOCALHOST_URL_USERS}?username=${currentUser}`);
         const userData = await response.json();
     
         if (userData.length > 0) {
             const user = userData[0];
             user[listName] = user[listName].filter(movie => movie.id !== movieId);
     
-            const updateResponse = await fetch(`http://localhost:3500/users/${user.id}`, {
+            const updateResponse = await fetch(`${LOCALHOST_URL_USERS}${user.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

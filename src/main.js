@@ -5,39 +5,35 @@ import PaginationUI from './ui/PaginationUI.js';
 import { START_PAGE } from './config/config.js';
 import AuthUI from './ui/AuthUI.js';
 import AuthService from './service/AuthService.js';
+
 const paginationUI = new PaginationUI('paginationContainer');
 const movieUI = new MovieUI('moviesContainer', 'movieModal', paginationUI);
 paginationUI.setMovieUI(movieUI);
 const filterUI = new FilterUI('filterModal', movieUI);
-
-  
+const movies = await MovieService.fetchMovies(START_PAGE);
 
 async function main() {
-    const movies = await MovieService.fetchMovies(START_PAGE);
-    const authUI = new AuthUI('authModal', AuthService.authenticate, AuthService.register)  
+    
+    const authUI = new AuthUI('authModal', AuthService.authenticate, AuthService.register);
     const authService = new AuthService();
     movieUI.displayMovies(movies.results);
     paginationUI.displayPagination(START_PAGE, movies.total_pages);
 
     document.getElementById('homeBtn').addEventListener('click', homeHandler);
+
     document.getElementById('filterBtn').addEventListener('click', filterUI.openModal);
 
     document.getElementById('watchListBtn').addEventListener('click', () => movieUI.displayWatchlist());
-    document.getElementById('favoritesBtn').addEventListener('click', () => movieUI.displayFavorites());    
-    
-    const logInBtn = document.getElementById('logInBtn');
-    logInBtn.addEventListener('click', () => authUI.openModal());
 
-    const logOutBtn = document.getElementById('logOutBtn');
-    logOutBtn.addEventListener('click', () => authService.logOut());
-        
-        
-    
+    document.getElementById('favoritesBtn').addEventListener('click', () => movieUI.displayFavorites());
+
+    document.getElementById('logInBtn').addEventListener('click', () => authUI.openModal());
+
+    document.getElementById('logOutBtn').addEventListener('click', () => authService.logOut());
 }
 
 async function homeHandler() {
-    filterUI.resetFilterSettings(); // Reset filter settings when HOME button is clicked
-    const movies = await MovieService.fetchMovies(START_PAGE);
+    filterUI.resetFilterSettings();    
     movieUI.displayMovies(movies.results);
     paginationUI.displayPagination(START_PAGE, movies.total_pages);
 }
