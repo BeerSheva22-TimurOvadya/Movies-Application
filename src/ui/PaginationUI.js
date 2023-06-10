@@ -1,4 +1,4 @@
-import { createButton, createInput } from '../util/utils.js';
+import { createButton, createInput } from '../util/PaginationUtil.js';
 import ButtonHandler from '../util/ButtonHandler.js';
 
 export default class PaginationUI {

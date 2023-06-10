@@ -3,7 +3,7 @@ import ModalHandler from '../util/ModalHandler.js';
 
 
 export default class FilterUI {
-    constructor(filterModalId, movieUI, homeHandler) {
+    constructor(filterModalId, movieUI) {
         this.filterModal = new ModalHandler(filterModalId);
         this.movieUI = movieUI;       
         this.initializeFilterUI();
@@ -89,6 +89,7 @@ export default class FilterUI {
             }
         });
     }
+    
 
     applyFilterSettings() {
         const filterSettings = this.getFilterSettings();
@@ -130,4 +131,5 @@ export default class FilterUI {
         }
         return from <= to;
     }
+
 }

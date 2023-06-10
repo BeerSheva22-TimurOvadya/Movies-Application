@@ -34,7 +34,7 @@ export default class MovieUI {
     }
 
     displayMovieDetails(movie) {
-        this.movieModal.displayModal();  
+        this.movieModal.displayModal();
         this.movieModal.setModalContent(`
             <div class="modal-content">
                 <span class="close">&times;</span>                
@@ -53,25 +53,23 @@ export default class MovieUI {
         `);
 
         this.movieModal.addCloseListener();
-            
+
         document.getElementById('addWatchlistBtn').addEventListener('click', () => {
-        if (!AuthService.isLoggedIn()) {
-            alert('Please log in to add to watch list.'); 
-        } else {
-            MovieService.addToWatchlist(movie);
-            this.movieModal.addCloseListener();
-        }
-    });
+            if (!AuthService.isLoggedIn()) {
+                alert('Please log in to add to watch list.');
+            } else {
+                MovieService.addToWatchlist(movie);
+                this.movieModal.addCloseListener();
+            }
+        });
 
-    document.getElementById('addFavoritesBtn').addEventListener('click', () => {
-        if (!AuthService.isLoggedIn()) {
-            alert('Please log in to add to favorites.'); 
-        } else {
-            MovieService.addToFavorites(movie);
-        }
-    });
-
-        
+        document.getElementById('addFavoritesBtn').addEventListener('click', () => {
+            if (!AuthService.isLoggedIn()) {
+                alert('Please log in to add to favorites.');
+            } else {
+                MovieService.addToFavorites(movie);
+            }
+        });
     }
 
     async applyFilter(filter) {
