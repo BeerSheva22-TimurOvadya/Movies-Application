@@ -32,11 +32,11 @@ export default class MovieUI {
         });
     }
 
-    displayMovieDetails(movie, removeButton = false, removeFromListMethod, buttonId, buttonText) {
-        this.movieModal.displayModal();
+    displayMovieDetails(movie) {
+        this.movieModal.displayModal();  
         this.movieModal.setModalContent(`
             <div class="modal-content">
-                <span class="close">&times;</span>
+                <span class="close">&times;</span>                
                 <div id="movieDetails">
                     <h2>${movie.title}</h2>
                     <img src="${MOVIE_IMAGE_URL}${movie.backdrop_path || movie.poster_path}">
@@ -44,34 +44,23 @@ export default class MovieUI {
                     <p>Release date: ${movie.release_date}</p>        
                     <p>Vote count: ${movie.vote_count}</p>
                     <p>Popularity: ${movie.popularity}</p>
-                    <p>Language: ${movie.original_language}</p>
-                    ${
-                        removeButton
-                            ? `<button id="${buttonId}" class="button">${buttonText}</button>`
-                            : `
+                    <p>Language: ${movie.original_language}</p>                   
                     <button id="addWatchlistBtn" class="button">Add to Watch List</button>
-                    <button id="addFavoritesBtn" class="button">Add to Favorites</button>
-                    `
-                    }
+                    <button id="addFavoritesBtn" class="button">Add to Favorites</button>                   
                 </div>
             </div>
         `);
 
         this.movieModal.addCloseListener();
+            
 
-        if (removeButton) {
-            this.buttonHandler.addButtonListener(buttonId, () => {
-                removeFromListMethod(movie.id);
-                this.movieModal.closeModal();
-            });
-        } else {
-            this.buttonHandler.addButtonListener('addWatchlistBtn', () =>
-                MovieService.addToWatchlist(movie),
-            );
-            this.buttonHandler.addButtonListener('addFavoritesBtn', () =>
-                MovieService.addToFavorites(movie),
-            );
-        }
+        this.buttonHandler.addButtonListener('addWatchlistBtn', () =>
+            MovieService.addToWatchlist(movie), this.movieModal.addCloseListener(),            
+        );
+
+        this.buttonHandler.addButtonListener('addFavoritesBtn', () =>
+            MovieService.addToFavorites(movie),
+        );
     }
 
     async applyFilter(filter) {

@@ -58,6 +58,8 @@ export default class MovieService {
             await saveData(`${LOCALHOST_URL_USERS}${user.id}`, 'PUT', user);
             return movie;
         }
+        
+        
     }
 
     static addToWatchlist(movie) {

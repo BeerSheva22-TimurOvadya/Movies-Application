@@ -15,8 +15,5 @@ export async function saveData(url, method, body) {
         },
         body: JSON.stringify(body),
     });
-    if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-    }
     return response;
 }

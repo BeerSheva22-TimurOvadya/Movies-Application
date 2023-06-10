@@ -1,12 +1,11 @@
 import MovieService from '../service/moviesService.js';
 import ModalHandler from '../util/ModalHandler.js';
-import ButtonHandler from '../util/ButtonHandler.js';
+
 
 export default class FilterUI {
     constructor(filterModalId, movieUI, homeHandler) {
         this.filterModal = new ModalHandler(filterModalId);
-        this.movieUI = movieUI; // save movieUI reference
-        this.buttonHandler = new ButtonHandler();
+        this.movieUI = movieUI;       
         this.initializeFilterUI();
     }
 
@@ -19,14 +18,12 @@ export default class FilterUI {
             <div class="filter-section">
                 <label for="genreWithFilter">With Genre:</label>
                 <select id="genreWithFilter">
-                    <option value="">Select genre</option>                    
-                    <!-- Здесь будут варианты выбора категорий фильмов -->
+                    <option value="">Select genre</option>   
                 </select>
 
                 <label for="genreWithoutFilter">Without Genre:</label>
                 <select id="genreWithoutFilter">
-                    <option value="">Select genre</option>                    
-                    <!-- Здесь будут варианты выбора категорий фильмов -->
+                    <option value="">Select genre</option>                  
                 </select>
             </div>            
 
@@ -43,6 +40,8 @@ export default class FilterUI {
             <button id="applyFilterBtn" class="button">Apply Filter</button>
         </div>
     `);
+
+    
         this.genres = await MovieService.initializeGenres();
         const genreWithFilter = document.getElementById('genreWithFilter');
         const genreWithoutFilter = document.getElementById('genreWithoutFilter');
@@ -66,32 +65,26 @@ export default class FilterUI {
             const optionWithout = option.cloneNode(true);
             genreWithoutFilter.appendChild(optionWithout);
         });
+
+        document
+        .getElementById('filterCloseBtn')
+        .addEventListener('click', () => this.filterModal.closeModal());
     }
-    updateAvailableGenres(genreSelect, selectedGenre) {
-        // Get the current selected genre in the other filter
-        const currentSelectedGenre = genreSelect.value;
-
-        // Clear all options in the genre select
-        genreSelect.innerHTML = '';
-
-        // Add an empty option
+    updateAvailableGenres(genreSelect, selectedGenre) {       
+        const currentSelectedGenre = genreSelect.value;        
+        genreSelect.innerHTML = '';        
         const emptyOption = document.createElement('option');
         emptyOption.value = '';
         emptyOption.innerText = 'Select genre';
-        genreSelect.appendChild(emptyOption);
-
-        // Add genres that are not selected in the other filter
+        genreSelect.appendChild(emptyOption);      
         Object.entries(this.genres).forEach(([id, name]) => {
             if (id !== selectedGenre) {
                 const option = document.createElement('option');
                 option.value = id;
-                option.innerText = name;
-
-                // Keep the current selected genre in the other filter if it is still available
+                option.innerText = name;                
                 if (id === currentSelectedGenre) {
                     option.selected = true;
                 }
-
                 genreSelect.appendChild(option);
             }
         });
@@ -99,7 +92,6 @@ export default class FilterUI {
 
     applyFilterSettings() {
         const filterSettings = this.getFilterSettings();
-
         if (this.validateYearFilter(filterSettings.yearFrom, filterSettings.yearTo)) {
             this.filter = filterSettings;
             this.movieUI.applyFilter(this.filter);
@@ -130,15 +122,12 @@ export default class FilterUI {
         const from = parseInt(yearFrom, 10);
         const to = parseInt(yearTo, 10);
         const currentYear = new Date().getFullYear();
-
         if (isNaN(from) || isNaN(to)) {
             return false;
         }
-
         if (from < 1900 || from > currentYear || to < 1900 || to > currentYear) {
             return false;
         }
-
         return from <= to;
     }
 }

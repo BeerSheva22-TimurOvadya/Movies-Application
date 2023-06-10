@@ -8,52 +8,37 @@ import AuthService from './service/AuthService.js';
 
 const paginationUI = new PaginationUI('paginationContainer');
 const movieUI = new MovieUI('moviesContainer', 'movieModal', paginationUI);
-paginationUI.setMovieUI(movieUI);
+
 const filterUI = new FilterUI('filterModal', movieUI);
+const authUI = new AuthUI('authModal', AuthService.authenticate, AuthService.register);
 const movies = await MovieService.fetchMovies(START_PAGE);
 
 async function main() {
-    const authUI = new AuthUI('authModal', AuthService.authenticate, AuthService.register);
+    paginationUI.setMovieUI(movieUI);
     movieUI.displayMovies(movies.results);
     paginationUI.displayPagination(START_PAGE, movies.total_pages);
 
-    document.getElementById('homeBtn').addEventListener('click', homeHandler);
-
-    document
-        .getElementById('filterBtn')
-        .addEventListener('click', () => filterUI.filterModal.displayModal());
-
-    document
-        .getElementById('filterCloseBtn')
-        .addEventListener('click', () => filterUI.filterModal.closeModal());
-
-    document
-        .getElementById('resetFilterBtn')
-        .addEventListener('click', () => filterUI.resetFilterSettings());
-
-    document
-        .getElementById('applyFilterBtn')
-        .addEventListener('click', () => filterUI.applyFilterSettings());
-
-    document.getElementById('watchListBtn').addEventListener('click', () => movieUI.displayWatchlist());
-
-    document.getElementById('favoritesBtn').addEventListener('click', () => movieUI.displayFavorites());
-
-    document.getElementById('logInBtn').addEventListener('click', () => authUI.openModal());
-
-    document
-        .getElementById('loginCloseBtn')
-        .addEventListener('click', () => authUI.authModal.closeModal());
-
-    document.getElementById('loginBtn').addEventListener('click', () => authUI.applyAuth());
-
-    document.getElementById('registerBtn').addEventListener('click', () => authUI.registerUser());
-
-    document.getElementById('logOutBtn').addEventListener('click', () => AuthService.logOut());
+    
+    function addClickListener(id, handler) {
+        document.getElementById(id).addEventListener('click', handler);
+    }
+        
+    addClickListener('homeBtn', homeHandler);
+    addClickListener('filterBtn', () => filterUI.filterModal.displayModal());
+    addClickListener('filterCloseBtn', () => filterUI.filterModal.closeModal());
+    addClickListener('resetFilterBtn', () => filterUI.resetFilterSettings());
+    addClickListener('applyFilterBtn', () => filterUI.applyFilterSettings());
+    addClickListener('watchListBtn', () => movieUI.displayWatchlist());
+    addClickListener('favoritesBtn', () => movieUI.displayFavorites());
+    addClickListener('logInBtn', () => authUI.openModal());
+    addClickListener('loginCloseBtn', () => authUI.authModal.closeModal());
+    addClickListener('loginBtn', () => authUI.applyAuth());
+    addClickListener('registerBtn', () => authUI.registerUser());
+    addClickListener('logOutBtn', () => AuthService.logOut());
 }
 
 async function homeHandler() {
-    filterUI.resetFilterSettings();
+    const movies = await MovieService.fetchMovies(START_PAGE);
     movieUI.displayMovies(movies.results);
     paginationUI.displayPagination(START_PAGE, movies.total_pages);
 }
