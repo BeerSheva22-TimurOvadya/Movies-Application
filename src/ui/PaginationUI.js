@@ -1,12 +1,14 @@
 import { createButton, createInput } from '../util/utils.js';
+import ButtonHandler from './ButtonHandler.js';
 
 export default class PaginationUI {
     constructor(paginationContainerId) {
         this.paginationContainer = document.getElementById(paginationContainerId);
+        this.buttonHandler = new ButtonHandler();
     }
 
     displayPagination(currentPage, totalPages) {
-        this.paginationContainer.innerHTML = ''; 
+        this.paginationContainer.innerHTML = '';
 
         const prevBtn = createButton('Previous', currentPage > 1, () =>
             this.movieUI.navigateToPage(currentPage - 1, totalPages),
@@ -30,6 +32,4 @@ export default class PaginationUI {
     setMovieUI(movieUI) {
         this.movieUI = movieUI;
     }
-
-    
 }

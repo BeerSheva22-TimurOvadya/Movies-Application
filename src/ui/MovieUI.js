@@ -4,13 +4,15 @@ import {
     LOCALHOST_URL_USERS
 } from '../config/config.js';
 import MovieService from '../service/moviesService.js';
+import ModalHandler from './ModalHandler.js';
+import ButtonHandler from './ButtonHandler.js';
 
 export default class MovieUI {
     constructor(moviesContainerId, movieModalId, paginationUI) {
         this.moviesContainer = document.getElementById(moviesContainerId);
-        this.movieModal = document.getElementById(movieModalId);
+        this.movieModal = new ModalHandler(movieModalId);
         this.paginationUI = paginationUI;
-        this.closeModal = this.closeModal.bind(this);
+        this.buttonHandler = new ButtonHandler();
     }
 
     async createMovieCard(movie, genres, clickEvent) {
@@ -35,9 +37,8 @@ export default class MovieUI {
     }
 
     displayMovieDetails(movie) {
-        // Show the modal
-        this.movieModal.style.display = 'block';
-        this.movieModal.innerHTML = `
+        this.movieModal.displayModal();
+        this.movieModal.setModalContent(`
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <div id="movieDetails">
@@ -52,24 +53,17 @@ export default class MovieUI {
                     <button id="addFavoritesBtn" class="button">Add to Favorites</button>
                 </div>
             </div>
-        `;
-
-        // When the user clicks on <span> (x), close the modal
-        const span = document.getElementsByClassName('close')[0];
-        span.onclick = this.closeModal;
-
-        document.getElementById('addWatchlistBtn').addEventListener('click', (event) => {
-            MovieService.addToWatchlist(movie);
-        });
-
-        document.getElementById('addFavoritesBtn').addEventListener('click', () => {
-            MovieService.addToFavorites(movie);
-        });
+        `);
+    
+        this.movieModal.addCloseListener();
+    
+        this.buttonHandler.addButtonListener('addWatchlistBtn', () => MovieService.addToWatchlist(movie));
+        this.buttonHandler.addButtonListener('addFavoritesBtn', () => MovieService.addToFavorites(movie));
     }
 
-    closeModal() {
-        this.movieModal.style.display = 'none';
-    }
+    // closeModal() {
+    //     this.movieModal.style.display = 'none';
+    // }
 
     async applyFilter(filter) {
         this.filter = filter;
@@ -175,8 +169,8 @@ export default class MovieUI {
     }
 
     displayMovieDetailsWithRemoveButton(movie, removeFromListMethod, buttonId, buttonText) {
-        this.movieModal.style.display = 'block';
-        this.movieModal.innerHTML = `
+        this.movieModal.displayModal();
+        this.movieModal.setModalContent(`
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <div id="movieDetails">
@@ -190,15 +184,13 @@ export default class MovieUI {
                     <button id="${buttonId}" class="button">${buttonText}</button>
                 </div>
             </div>
-        `;
-
-        const span = document.getElementsByClassName('close')[0];
-        span.onclick = this.closeModal;
-
-        const removeBtn = document.getElementById(buttonId);
-        removeBtn.addEventListener('click', () => {
+        `);
+    
+        this.movieModal.addCloseListener();
+    
+        this.buttonHandler.addButtonListener(buttonId, () => {
             removeFromListMethod(movie.id);
-            this.closeModal();
+            this.movieModal.closeModal();
         });
     }
 }

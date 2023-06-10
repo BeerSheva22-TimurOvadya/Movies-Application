@@ -1,9 +1,12 @@
+
 export default class AuthUI {
     constructor(authModalId, authHandler, registerHandler) {
         this.authModal = document.getElementById(authModalId);
         this.authHandler = authHandler;
         this.registerHandler = registerHandler;
         this.initializeAuthUI();
+        
+       
     }
 
     openModal() {

@@ -1,25 +1,17 @@
 import MovieService from '../service/moviesService.js';
+import ModalHandler from './ModalHandler.js';
+import ButtonHandler from './ButtonHandler.js';
+
 export default class FilterUI {
     constructor(filterModalId, movieUI, homeHandler) {
-        this.filterModal = document.getElementById(filterModalId);
+        this.filterModal = new ModalHandler(filterModalId);
         this.movieUI = movieUI; // save movieUI reference
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.applyFilterSettings = this.applyFilterSettings.bind(this); // bind this to applyFilterSettings
-        this.resetFilterSettings = this.resetFilterSettings.bind(this); // bind this to resetFilterSettings
+        this.buttonHandler = new ButtonHandler();
         this.initializeFilterUI();
     }
 
-    openModal() {
-        this.filterModal.style.display = 'block';
-    }
-
-    closeModal() {
-        this.filterModal.style.display = 'none';
-    }
-
     async initializeFilterUI() {
-        this.filterModal.innerHTML = `
+        this.filterModal.setModalContent(`
         <div class="modal-content">
             <span id="filterCloseBtn" class="close">&times;</span>
             <h2>Filter Settings</h2>
@@ -50,25 +42,22 @@ export default class FilterUI {
             <button id="resetFilterBtn" class="button">Reset Filter</button>
             <button id="applyFilterBtn" class="button">Apply Filter</button>
         </div>
-    `;
+    `);
 
-        const closeBtn = document.getElementById('filterCloseBtn');
-        closeBtn.addEventListener('click', this.closeModal);
+        this.buttonHandler.addButtonListener('filterCloseBtn', () => this.filterModal.closeModal());
 
-        const applyFilterBtn = document.getElementById('applyFilterBtn');
-        applyFilterBtn.addEventListener('click', this.applyFilterSettings);
+        this.buttonHandler.addButtonListener('applyFilterBtn', () => this.applyFilterSettings());
 
-        const resetFilterBtn = document.getElementById('resetFilterBtn');
-        resetFilterBtn.addEventListener('click', this.resetFilterSettings);
+        this.buttonHandler.addButtonListener('resetFilterBtn', () => this.resetFilterSettings());
 
         this.genres = await MovieService.initializeGenres();
         const genreWithFilter = document.getElementById('genreWithFilter');
         const genreWithoutFilter = document.getElementById('genreWithoutFilter');
-        
+
         genreWithFilter.addEventListener('change', () => {
             this.updateAvailableGenres(genreWithoutFilter, genreWithFilter.value);
         });
-        
+
         genreWithoutFilter.addEventListener('change', () => {
             this.updateAvailableGenres(genreWithFilter, genreWithoutFilter.value);
         });
@@ -113,17 +102,15 @@ export default class FilterUI {
                 genreSelect.appendChild(option);
             }
         });
-
-
     }
 
     applyFilterSettings() {
         const filterSettings = this.getFilterSettings();
-    
+
         if (this.validateYearFilter(filterSettings.yearFrom, filterSettings.yearTo)) {
             this.filter = filterSettings;
             this.movieUI.applyFilter(this.filter);
-            this.closeModal();
+            this.filterModal.closeModal();
         } else {
             alert('Invalid year filter. Please check the "Year From" and "Year To" inputs.');
         }
@@ -145,23 +132,20 @@ export default class FilterUI {
         document.getElementById('yearToFilter').value = '';
         this.movieUI.applyFilter(null);
     }
+
     validateYearFilter(yearFrom, yearTo) {
         const from = parseInt(yearFrom, 10);
         const to = parseInt(yearTo, 10);
         const currentYear = new Date().getFullYear();
-    
+
         if (isNaN(from) || isNaN(to)) {
             return false;
         }
-    
+
         if (from < 1900 || from > currentYear || to < 1900 || to > currentYear) {
             return false;
         }
-    
+
         return from <= to;
     }
-
-    
-
- 
 }

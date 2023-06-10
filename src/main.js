@@ -15,13 +15,13 @@ const movies = await MovieService.fetchMovies(START_PAGE);
 async function main() {
     
     const authUI = new AuthUI('authModal', AuthService.authenticate, AuthService.register);
-    const authService = new AuthService();
+    // const authService = new AuthService();
     movieUI.displayMovies(movies.results);
     paginationUI.displayPagination(START_PAGE, movies.total_pages);
 
     document.getElementById('homeBtn').addEventListener('click', homeHandler);
 
-    document.getElementById('filterBtn').addEventListener('click', filterUI.openModal);
+    document.getElementById('filterBtn').addEventListener('click', () => filterUI.filterModal.displayModal());
 
     document.getElementById('watchListBtn').addEventListener('click', () => movieUI.displayWatchlist());
 
@@ -29,7 +29,7 @@ async function main() {
 
     document.getElementById('logInBtn').addEventListener('click', () => authUI.openModal());
 
-    document.getElementById('logOutBtn').addEventListener('click', () => authService.logOut());
+    document.getElementById('logOutBtn').addEventListener('click', () => AuthService.logOut());
 }
 
 async function homeHandler() {
