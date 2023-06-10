@@ -15,5 +15,11 @@ export async function saveData(url, method, body) {
         },
         body: JSON.stringify(body),
     });
-    return response;
+    
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        throw new Error('Error saving data');
+    }
 }
