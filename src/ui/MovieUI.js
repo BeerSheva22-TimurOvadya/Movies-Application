@@ -1,11 +1,7 @@
-import {
-    MOVIE_IMAGE_URL,
-    START_PAGE,
-    LOCALHOST_URL_USERS
-} from '../config/config.js';
+import { MOVIE_IMAGE_URL, START_PAGE, LOCALHOST_URL_USERS } from '../config/config.js';
 import MovieService from '../service/moviesService.js';
-import ModalHandler from './ModalHandler.js';
-import ButtonHandler from './ButtonHandler.js';
+import ModalHandler from '../util/ModalHandler.js';
+import ButtonHandler from '../util/ButtonHandler.js';
 
 export default class MovieUI {
     constructor(moviesContainerId, movieModalId, paginationUI) {
@@ -36,7 +32,7 @@ export default class MovieUI {
         });
     }
 
-    displayMovieDetails(movie) {
+    displayMovieDetails(movie, removeButton = false, removeFromListMethod, buttonId, buttonText) {
         this.movieModal.displayModal();
         this.movieModal.setModalContent(`
             <div class="modal-content">
@@ -49,29 +45,37 @@ export default class MovieUI {
                     <p>Vote count: ${movie.vote_count}</p>
                     <p>Popularity: ${movie.popularity}</p>
                     <p>Language: ${movie.original_language}</p>
+                    ${
+                        removeButton
+                            ? `<button id="${buttonId}" class="button">${buttonText}</button>`
+                            : `
                     <button id="addWatchlistBtn" class="button">Add to Watch List</button>
                     <button id="addFavoritesBtn" class="button">Add to Favorites</button>
+                    `
+                    }
                 </div>
             </div>
         `);
-    
-        this.movieModal.addCloseListener();
-    
-        this.buttonHandler.addButtonListener('addWatchlistBtn', () => MovieService.addToWatchlist(movie));
-        this.buttonHandler.addButtonListener('addFavoritesBtn', () => MovieService.addToFavorites(movie));
-    }
 
-    // closeModal() {
-    //     this.movieModal.style.display = 'none';
-    // }
+        this.movieModal.addCloseListener();
+
+        if (removeButton) {
+            this.buttonHandler.addButtonListener(buttonId, () => {
+                removeFromListMethod(movie.id);
+                this.movieModal.closeModal();
+            });
+        } else {
+            this.buttonHandler.addButtonListener('addWatchlistBtn', () =>
+                MovieService.addToWatchlist(movie),
+            );
+            this.buttonHandler.addButtonListener('addFavoritesBtn', () =>
+                MovieService.addToFavorites(movie),
+            );
+        }
+    }
 
     async applyFilter(filter) {
         this.filter = filter;
-
-        // if (filter === null) {
-        //     const data = await MovieService.fetchMovies(START_PAGE);
-        //     return;
-        // }
         const data = await MovieService.fetchFilteredMovies(START_PAGE, this.filter);
         this.displayMovies(data.results);
         this.paginationUI.displayPagination(START_PAGE, data.total_pages);
@@ -90,7 +94,6 @@ export default class MovieUI {
                 this.paginationUI.displayPagination(pageNumber, data.total_pages);
                 window.scrollTo(0, 0);
             } catch (error) {
-                // Обработка ошибки от сервера
                 if (error.errors) {
                     window.alert(`Server Error: ${error.errors[0]}`);
                 } else {
@@ -106,11 +109,11 @@ export default class MovieUI {
         const currentUser = localStorage.getItem('currentUser');
         const response = await fetch(`${LOCALHOST_URL_USERS}?username=${currentUser}`);
         const userData = await response.json();
-    
+
         if (userData.length > 0) {
             const user = userData[0];
             const movies = user[listName];
-    
+
             const genres = await MovieService.initializeGenres();
             this.moviesContainer.innerHTML = '';
             if (movies) {
@@ -127,7 +130,7 @@ export default class MovieUI {
             }
         }
     }
-    
+
     displayWatchlist() {
         this.displayMovieListFromUser(
             this.removeFromList.bind(this, 'watchList'),
@@ -136,7 +139,7 @@ export default class MovieUI {
             'watchList',
         );
     }
-    
+
     displayFavorites() {
         this.displayMovieListFromUser(
             this.removeFromList.bind(this, 'favorites'),
@@ -149,19 +152,19 @@ export default class MovieUI {
         const currentUser = localStorage.getItem('currentUser');
         const response = await fetch(`${LOCALHOST_URL_USERS}?username=${currentUser}`);
         const userData = await response.json();
-    
+
         if (userData.length > 0) {
             const user = userData[0];
-            user[listName] = user[listName].filter(movie => movie.id !== movieId);
-    
+            user[listName] = user[listName].filter((movie) => movie.id !== movieId);
+
             const updateResponse = await fetch(`${LOCALHOST_URL_USERS}${user.id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(user)
+                body: JSON.stringify(user),
             });
-    
+
             if (!updateResponse.ok) {
                 throw new Error(`Error: ${updateResponse.status}`);
             }
@@ -185,9 +188,9 @@ export default class MovieUI {
                 </div>
             </div>
         `);
-    
+
         this.movieModal.addCloseListener();
-    
+
         this.buttonHandler.addButtonListener(buttonId, () => {
             removeFromListMethod(movie.id);
             this.movieModal.closeModal();

@@ -1,6 +1,6 @@
 import MovieService from '../service/moviesService.js';
-import ModalHandler from './ModalHandler.js';
-import ButtonHandler from './ButtonHandler.js';
+import ModalHandler from '../util/ModalHandler.js';
+import ButtonHandler from '../util/ButtonHandler.js';
 
 export default class FilterUI {
     constructor(filterModalId, movieUI, homeHandler) {
@@ -43,13 +43,6 @@ export default class FilterUI {
             <button id="applyFilterBtn" class="button">Apply Filter</button>
         </div>
     `);
-
-        this.buttonHandler.addButtonListener('filterCloseBtn', () => this.filterModal.closeModal());
-
-        this.buttonHandler.addButtonListener('applyFilterBtn', () => this.applyFilterSettings());
-
-        this.buttonHandler.addButtonListener('resetFilterBtn', () => this.resetFilterSettings());
-
         this.genres = await MovieService.initializeGenres();
         const genreWithFilter = document.getElementById('genreWithFilter');
         const genreWithoutFilter = document.getElementById('genreWithoutFilter');
