@@ -2,7 +2,6 @@ import { API_KEY, BASE_URL, LOCALHOST_URL_USERS } from '../config/config.js';
 import { fetchData, saveData } from './fetchService.js';
 
 export default class MovieService {
-
     static fetchMovies(page) {
         const url = `${BASE_URL}movie/popular?language=en-US&page=${page}&api_key=${API_KEY}`;
         return fetchData(url);
@@ -43,11 +42,10 @@ export default class MovieService {
         return fetchData(url);
     }
 
-    static async addMovieToUserList(movie, listName ) {
+    static async addMovieToUserList(movie, listName) {
         const currentUser = localStorage.getItem('currentUser');
         const url = `${LOCALHOST_URL_USERS}?username=${currentUser}`;
         const data = await fetchData(url);
-
         if (data.length > 0) {
             const user = data[0];
             if (user[listName].find((m) => m.id === movie.id)) {
@@ -58,11 +56,10 @@ export default class MovieService {
 
             await saveData(`${LOCALHOST_URL_USERS}${user.id}`, 'PUT', user);
             return movie;
-        }       
-        
+        }
     }
 
-    async removeFromList(listName, movieId) {
+    async removeFromList(listName, movieId, callback) {
         const currentUser = localStorage.getItem('currentUser');
         const response = `${LOCALHOST_URL_USERS}?username=${currentUser}`;
         const userData = await fetchData(response);
@@ -70,18 +67,8 @@ export default class MovieService {
         if (userData.length > 0) {
             const user = userData[0];
             user[listName] = user[listName].filter((movie) => movie.id !== movieId);
-
             await saveData(`${LOCALHOST_URL_USERS}${user.id}`, 'PUT', user);
-
-            if (listName === 'watchList') {
-                this.displayWatchlist();
-            } else if (listName === 'favorites') {
-                this.displayFavorites();
-            }
+            callback();
         }
     }
-
-    
-
-
 }

@@ -34,39 +34,6 @@ export default class MovieUI {
         this.moviesContainer.appendChild(movieCard);
     }
 
-   
-
-    displayMovieDetails(movie) {
-        this.movieModal.displayModal();
-        this.movieModal.setModalContent(`
-            <div class="modal-content">
-                <span class="close">&times;</span>                
-                <div id="movieDetails">
-                    <h2>${movie.title}</h2>
-                    <img src="${MOVIE_IMAGE_URL}${movie.backdrop_path || movie.poster_path}">
-                    <p>${movie.overview}</p>
-                    <p>Release date: ${movie.release_date}</p>        
-                    <p>Vote count: ${movie.vote_count}</p>
-                    <p>Popularity: ${movie.popularity}</p>
-                    <p>Language: ${movie.original_language}</p>                   
-                    <button id="addWatchlistBtn" class="button">Add to Watch List</button>
-                    <button id="addFavoritesBtn" class="button">Add to Favorites</button>                   
-                </div>
-            </div>
-        `);
-    
-        this.movieModal.addCloseListener();
-    
-        this.buttonHandler.addButtonListener('addWatchlistBtn', () => 
-        this.#checkLoginAndExecute(() => MovieService.addMovieToUserList(movie, 'watchList'), movie.title)
-        );
-    
-        this.buttonHandler.addButtonListener('addFavoritesBtn', () => 
-            this.#checkLoginAndExecute(() => MovieService.addMovieToUserList(movie, 'favorites'), movie.title)
-        );
-       
-    }
-
     #checkLoginAndExecute(action, titleMovie) {
         if (!AuthService.isLoggedIn()) {
             alert(`Please log in, to add movie ${titleMovie}`);
@@ -75,7 +42,6 @@ export default class MovieUI {
             this.movieModal.closeModal();
         }
     }
-    
 
     async applyFilter(filter) {
         this.filter = filter;
@@ -108,7 +74,7 @@ export default class MovieUI {
         }
     }
 
-    async displayMovieListFromUser(removeFromListMethod, buttonId, buttonText, listName) {
+    async displayMovieListFromUser(buttonId, buttonText, listName) {
         const currentUser = localStorage.getItem('currentUser');
         const response = await fetch(`${LOCALHOST_URL_USERS}?username=${currentUser}`);
         const userData = await response.json();
@@ -122,12 +88,7 @@ export default class MovieUI {
             if (movies) {
                 movies.forEach((movie) => {
                     this.createMovieCard(movie, genres, () =>
-                        this.displayMovieDetailsWithRemoveButton(
-                            movie,
-                            removeFromListMethod,
-                            buttonId,
-                            buttonText,
-                        ),
+                        this.displayMovieDetailsWithRemoveButton(movie, buttonId, buttonText),
                     );
                 });
             }
@@ -135,26 +96,50 @@ export default class MovieUI {
     }
 
     displayWatchlist() {
-        this.displayMovieListFromUser(
-           this.movieService.removeFromList.bind(this, 'watchList'),
-            'removeFromWatchlistBtn',
-            'Remove from Watchlist',
-            'watchList',
-        );
+        this.displayMovieListFromUser('removeFromWatchlistBtn', 'Remove from Watchlist', 'watchList');
     }
 
     displayFavorites() {
-        this.displayMovieListFromUser(
-            this.movieService.removeFromList.bind(this, 'favorites'),
-            'removeFromFavoritesBtn',
-            'Remove from Favorites',
-            'favorites',
+        this.displayMovieListFromUser('removeFromFavoritesBtn', 'Remove from Favorites', 'favorites');
+    }
+
+    displayMovieDetails(movie) {
+        this.movieModal.displayModal();
+        this.movieModal.setModalContent(`
+            <div class="modal-content">
+                <span class="close">&times;</span>                
+                <div id="movieDetails">
+                    <h2>${movie.title}</h2>
+                    <img src="${MOVIE_IMAGE_URL}${movie.backdrop_path || movie.poster_path}">
+                    <p>${movie.overview}</p>
+                    <p>Release date: ${movie.release_date}</p>        
+                    <p>Vote count: ${movie.vote_count}</p>
+                    <p>Popularity: ${movie.popularity}</p>
+                    <p>Language: ${movie.original_language}</p>                   
+                    <button id="addWatchlistBtn" class="button">Add to Watch List</button>
+                    <button id="addFavoritesBtn" class="button">Add to Favorites</button>                   
+                </div>
+            </div>
+        `);
+
+        this.movieModal.addCloseListener();
+
+        this.buttonHandler.addButtonListener('addWatchlistBtn', () =>
+            this.#checkLoginAndExecute(
+                () => MovieService.addMovieToUserList(movie, 'watchList'),
+                movie.title,
+            ),
+        );
+
+        this.buttonHandler.addButtonListener('addFavoritesBtn', () =>
+            this.#checkLoginAndExecute(
+                () => MovieService.addMovieToUserList(movie, 'favorites'),
+                movie.title,
+            ),
         );
     }
 
-    
-    
-    displayMovieDetailsWithRemoveButton(movie, removeFromListMethod, buttonId, buttonText) {
+    displayMovieDetailsWithRemoveButton(movie, buttonId, buttonText) {
         this.movieModal.displayModal();
         this.movieModal.setModalContent(`
             <div class="modal-content">
@@ -173,11 +158,16 @@ export default class MovieUI {
         `);
 
         this.movieModal.addCloseListener();
-
-        this.buttonHandler.addButtonListener(buttonId, () => {
-            removeFromListMethod(movie.id);
-            this.movieModal.closeModal();     
-
-        });
+        if (buttonId === 'removeFromWatchlistBtn') {
+            this.buttonHandler.addButtonListener('removeFromWatchlistBtn', () => {
+                this.movieService.removeFromList('watchList', movie.id, () => this.displayWatchlist()),
+                    this.movieModal.closeModal();
+            });
+        } else if (buttonId === 'removeFromFavoritesBtn') {
+            this.buttonHandler.addButtonListener('removeFromFavoritesBtn', () => {
+                this.movieService.removeFromList('favorites', movie.id, () => this.displayFavorites()),
+                    this.movieModal.closeModal();
+            });
+        }
     }
 }
