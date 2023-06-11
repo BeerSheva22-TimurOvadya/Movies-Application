@@ -51,26 +51,28 @@ export default class MovieUI {
                 </div>
             </div>
         `);
-
+    
         this.movieModal.addCloseListener();
-
-        document.getElementById('addWatchlistBtn').addEventListener('click', () => {
+    
+        document.getElementById('addWatchlistBtn').addEventListener('click', async () => {
             if (!AuthService.isLoggedIn()) {
                 alert('Please log in to add to watch list.');
             } else {
-                MovieService.addToWatchlist(movie);
-                this.movieModal.addCloseListener();
+                await MovieService.addToWatchlist(movie);
+                this.movieModal.closeModal();
             }
         });
-
-        document.getElementById('addFavoritesBtn').addEventListener('click', () => {
+    
+        document.getElementById('addFavoritesBtn').addEventListener('click', async () => {
             if (!AuthService.isLoggedIn()) {
                 alert('Please log in to add to favorites.');
             } else {
-                MovieService.addToFavorites(movie);
+                await MovieService.addToFavorites(movie);
+                this.movieModal.closeModal();
             }
         });
     }
+    
 
     async applyFilter(filter) {
         this.filter = filter;
@@ -165,6 +167,12 @@ export default class MovieUI {
 
             if (!updateResponse.ok) {
                 throw new Error(`Error: ${updateResponse.status}`);
+            }
+            
+            if (listName === 'watchList') {
+                this.displayWatchlist();
+            } else if (listName === 'favorites') {
+                this.displayFavorites();
             }
         }
     }
