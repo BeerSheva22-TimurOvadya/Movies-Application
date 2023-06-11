@@ -13,19 +13,16 @@ const filterUI = new FilterUI('filterModal', movieUI);
 const authUI = new AuthUI('authModal', AuthService.authenticate, AuthService.register);
 const movies = await MovieService.fetchMovies(START_PAGE);
 
-
 async function main() {
-   authUI.updateUIBasedOnAuthStatus();
+    authUI.updateUIBasedOnAuthStatus();
     paginationUI.setMovieUI(movieUI);
     movieUI.displayMovies(movies.results);
     paginationUI.displayPagination(START_PAGE, movies.total_pages);
-    
 
-    
     function addClickListener(id, handler) {
         document.getElementById(id).addEventListener('click', handler);
     }
-        
+
     addClickListener('homeBtn', homeHandler);
     addClickListener('filterBtn', () => filterUI.filterModal.displayModal());
     addClickListener('filterCloseBtn', () => filterUI.filterModal.closeModal());
@@ -37,12 +34,13 @@ async function main() {
     addClickListener('loginCloseBtn', () => authUI.authModal.closeModal());
     addClickListener('loginBtn', () => authUI.applyAuth());
     addClickListener('registerBtn', () => authUI.registerUser());
-    addClickListener('logOutBtn', () => {authUI.logOut(); location.reload()});
+    addClickListener('logOutBtn', () => {
+        authUI.logOut();
+        location.reload();
+    });
 }
 
-
-
-async function homeHandler() {    
+async function homeHandler() {
     movieUI.displayMovies(movies.results);
     paginationUI.displayPagination(START_PAGE, movies.total_pages);
 }

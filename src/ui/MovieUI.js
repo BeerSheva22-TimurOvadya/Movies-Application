@@ -10,6 +10,15 @@ export default class MovieUI {
         this.movieModal = new ModalHandler(movieModalId);
         this.paginationUI = paginationUI;
         this.buttonHandler = new ButtonHandler();
+        this.movieService = new MovieService();
+    }
+
+    async displayMovies(movies) {
+        const genres = await MovieService.initializeGenres();
+        this.moviesContainer.innerHTML = '';
+        movies.forEach((movie) => {
+            this.createMovieCard(movie, genres, () => this.displayMovieDetails(movie));
+        });
     }
 
     async createMovieCard(movie, genres, clickEvent) {
@@ -25,13 +34,7 @@ export default class MovieUI {
         this.moviesContainer.appendChild(movieCard);
     }
 
-    async displayMovies(movies) {
-        const genres = await MovieService.initializeGenres();
-        this.moviesContainer.innerHTML = '';
-        movies.forEach((movie) => {
-            this.createMovieCard(movie, genres, () => this.displayMovieDetails(movie));
-        });
-    }
+   
 
     displayMovieDetails(movie) {
         this.movieModal.displayModal();
@@ -54,23 +57,23 @@ export default class MovieUI {
     
         this.movieModal.addCloseListener();
     
-        document.getElementById('addWatchlistBtn').addEventListener('click', async () => {
-            if (!AuthService.isLoggedIn()) {
-                alert('Please log in to add to watch list.');
-            } else {
-                await MovieService.addToWatchlist(movie);
-                this.movieModal.closeModal();
-            }
-        });
+        this.buttonHandler.addButtonListener('addWatchlistBtn', () => 
+        this.#checkLoginAndExecute(() => MovieService.addMovieToUserList(movie, 'watchList'), movie.title)
+        );
     
-        document.getElementById('addFavoritesBtn').addEventListener('click', async () => {
-            if (!AuthService.isLoggedIn()) {
-                alert('Please log in to add to favorites.');
-            } else {
-                await MovieService.addToFavorites(movie);
-                this.movieModal.closeModal();
-            }
-        });
+        this.buttonHandler.addButtonListener('addFavoritesBtn', () => 
+            this.#checkLoginAndExecute(() => MovieService.addMovieToUserList(movie, 'favorites'), movie.title)
+        );
+       
+    }
+
+    #checkLoginAndExecute(action, titleMovie) {
+        if (!AuthService.isLoggedIn()) {
+            alert(`Please log in, to add movie ${titleMovie}`);
+        } else {
+            action();
+            this.movieModal.closeModal();
+        }
     }
     
 
@@ -133,7 +136,7 @@ export default class MovieUI {
 
     displayWatchlist() {
         this.displayMovieListFromUser(
-            this.removeFromList.bind(this, 'watchList'),
+           this.movieService.removeFromList.bind(this, 'watchList'),
             'removeFromWatchlistBtn',
             'Remove from Watchlist',
             'watchList',
@@ -142,41 +145,15 @@ export default class MovieUI {
 
     displayFavorites() {
         this.displayMovieListFromUser(
-            this.removeFromList.bind(this, 'favorites'),
+            this.movieService.removeFromList.bind(this, 'favorites'),
             'removeFromFavoritesBtn',
             'Remove from Favorites',
             'favorites',
         );
     }
-    async removeFromList(listName, movieId) {
-        const currentUser = localStorage.getItem('currentUser');
-        const response = await fetch(`${LOCALHOST_URL_USERS}?username=${currentUser}`);
-        const userData = await response.json();
 
-        if (userData.length > 0) {
-            const user = userData[0];
-            user[listName] = user[listName].filter((movie) => movie.id !== movieId);
-
-            const updateResponse = await fetch(`${LOCALHOST_URL_USERS}${user.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(user),
-            });
-
-            if (!updateResponse.ok) {
-                throw new Error(`Error: ${updateResponse.status}`);
-            }
-            
-            if (listName === 'watchList') {
-                this.displayWatchlist();
-            } else if (listName === 'favorites') {
-                this.displayFavorites();
-            }
-        }
-    }
-
+    
+    
     displayMovieDetailsWithRemoveButton(movie, removeFromListMethod, buttonId, buttonText) {
         this.movieModal.displayModal();
         this.movieModal.setModalContent(`
@@ -190,7 +167,7 @@ export default class MovieUI {
                     <p>Vote count: ${movie.vote_count}</p>
                     <p>Popularity: ${movie.popularity}</p>
                     <p>Language: ${movie.original_language}</p>
-                    <button id="${buttonId}" class="button">${buttonText}</button>
+                    <button id="${buttonId}" class="button">${buttonText}</button>                    
                 </div>
             </div>
         `);
@@ -199,7 +176,8 @@ export default class MovieUI {
 
         this.buttonHandler.addButtonListener(buttonId, () => {
             removeFromListMethod(movie.id);
-            this.movieModal.closeModal();
+            this.movieModal.closeModal();     
+
         });
     }
 }

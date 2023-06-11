@@ -2,6 +2,7 @@ import { API_KEY, BASE_URL, LOCALHOST_URL_USERS } from '../config/config.js';
 import { fetchData, saveData } from './fetchService.js';
 
 export default class MovieService {
+
     static fetchMovies(page) {
         const url = `${BASE_URL}movie/popular?language=en-US&page=${page}&api_key=${API_KEY}`;
         return fetchData(url);
@@ -42,7 +43,7 @@ export default class MovieService {
         return fetchData(url);
     }
 
-    static async updateUserList(movie, listName, message) {
+    static async addMovieToUserList(movie, listName ) {
         const currentUser = localStorage.getItem('currentUser');
         const url = `${LOCALHOST_URL_USERS}?username=${currentUser}`;
         const data = await fetchData(url);
@@ -50,23 +51,37 @@ export default class MovieService {
         if (data.length > 0) {
             const user = data[0];
             if (user[listName].find((m) => m.id === movie.id)) {
-                window.alert(message);
+                window.alert(`Movie  is already in the ${listName}`);
                 return null;
             }
             user[listName].push(movie);
 
             await saveData(`${LOCALHOST_URL_USERS}${user.id}`, 'PUT', user);
             return movie;
+        }       
+        
+    }
+
+    async removeFromList(listName, movieId) {
+        const currentUser = localStorage.getItem('currentUser');
+        const response = `${LOCALHOST_URL_USERS}?username=${currentUser}`;
+        const userData = await fetchData(response);
+
+        if (userData.length > 0) {
+            const user = userData[0];
+            user[listName] = user[listName].filter((movie) => movie.id !== movieId);
+
+            await saveData(`${LOCALHOST_URL_USERS}${user.id}`, 'PUT', user);
+
+            if (listName === 'watchList') {
+                this.displayWatchlist();
+            } else if (listName === 'favorites') {
+                this.displayFavorites();
+            }
         }
-        
-        
     }
 
-    static addToWatchlist(movie) {
-        return this.updateUserList(movie, 'watchList', 'This movie is already in the Watchlist');
-    }
+    
 
-    static addToFavorites(movie) {
-        return this.updateUserList(movie, 'favorites', 'This movie is already in the Favorites');
-    }
+
 }
