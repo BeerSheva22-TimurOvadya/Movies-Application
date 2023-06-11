@@ -93,6 +93,7 @@ export default class MovieUI {
                 });
             }
         }
+        this.paginationUI.clearPagination();
     }
 
     displayWatchlist() {

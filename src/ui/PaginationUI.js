@@ -32,4 +32,7 @@ export default class PaginationUI {
     setMovieUI(movieUI) {
         this.movieUI = movieUI;
     }
+    clearPagination() {
+        this.paginationContainer.innerHTML = '';
+    }
 }
