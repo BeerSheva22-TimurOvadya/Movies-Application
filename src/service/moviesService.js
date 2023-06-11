@@ -7,15 +7,17 @@ export default class MovieService {
         return fetchData(url);
     }
 
+    static initializeGenres() {
+        return this.fetchGenres();
+    }
+
     static async fetchGenres() {
         const url = `${BASE_URL}genre/movie/list?language=en&api_key=${API_KEY}`;
         const data = await fetchData(url);
         return data.genres.reduce((acc, genre) => ({ ...acc, [genre.id]: genre.name }), {});
     }
 
-    static initializeGenres() {
-        return this.fetchGenres();
-    }
+    
 
     static fetchFilteredMovies(page, filter) {
         let url = `${BASE_URL}discover/movie?language=en-US&sort_by=popularity.desc&page=${page}&api_key=${API_KEY}`;

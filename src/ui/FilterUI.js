@@ -1,11 +1,10 @@
 import MovieService from '../service/moviesService.js';
 import ModalHandler from '../util/ModalHandler.js';
 
-
 export default class FilterUI {
     constructor(filterModalId, movieUI) {
         this.filterModal = new ModalHandler(filterModalId);
-        this.movieUI = movieUI;       
+        this.movieUI = movieUI;
         this.initializeFilterUI();
     }
 
@@ -41,7 +40,6 @@ export default class FilterUI {
         </div>
     `);
 
-    
         this.genres = await MovieService.initializeGenres();
         const genreWithFilter = document.getElementById('genreWithFilter');
         const genreWithoutFilter = document.getElementById('genreWithoutFilter');
@@ -67,21 +65,22 @@ export default class FilterUI {
         });
 
         document
-        .getElementById('filterCloseBtn')
-        .addEventListener('click', () => this.filterModal.closeModal());
+            .getElementById('filterCloseBtn')
+            .addEventListener('click', () => this.filterModal.closeModal());
     }
-    updateAvailableGenres(genreSelect, selectedGenre) {       
-        const currentSelectedGenre = genreSelect.value;        
-        genreSelect.innerHTML = '';        
+    
+    updateAvailableGenres(genreSelect, selectedGenre) {
+        const currentSelectedGenre = genreSelect.value;
+        genreSelect.innerHTML = '';
         const emptyOption = document.createElement('option');
         emptyOption.value = '';
         emptyOption.innerText = 'Select genre';
-        genreSelect.appendChild(emptyOption);      
+        genreSelect.appendChild(emptyOption);
         Object.entries(this.genres).forEach(([id, name]) => {
             if (id !== selectedGenre) {
                 const option = document.createElement('option');
                 option.value = id;
-                option.innerText = name;                
+                option.innerText = name;
                 if (id === currentSelectedGenre) {
                     option.selected = true;
                 }
@@ -89,7 +88,6 @@ export default class FilterUI {
             }
         });
     }
-    
 
     applyFilterSettings() {
         const filterSettings = this.getFilterSettings();
@@ -131,5 +129,4 @@ export default class FilterUI {
         }
         return from <= to;
     }
-
 }

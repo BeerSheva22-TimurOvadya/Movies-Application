@@ -34,76 +34,6 @@ export default class MovieUI {
         this.moviesContainer.appendChild(movieCard);
     }
 
-    #checkLoginAndExecute(action, titleMovie) {
-        if (!AuthService.isLoggedIn()) {
-            alert(`Please log in, to add movie ${titleMovie}`);
-        } else {
-            action();
-            this.movieModal.closeModal();
-        }
-    }
-
-    async applyFilter(filter) {
-        this.filter = filter;
-        const data = await MovieService.fetchFilteredMovies(START_PAGE, this.filter);
-        this.displayMovies(data.results);
-        this.paginationUI.displayPagination(START_PAGE, data.total_pages);
-    }
-
-    async navigateToPage(pageNumber, totalPages) {
-        if (pageNumber >= 1 && pageNumber <= totalPages) {
-            let data;
-            try {
-                if (this.filter) {
-                    data = await MovieService.fetchFilteredMovies(pageNumber, this.filter);
-                } else {
-                    data = await MovieService.fetchMovies(pageNumber);
-                }
-                this.displayMovies(data.results);
-                this.paginationUI.displayPagination(pageNumber, data.total_pages);
-                window.scrollTo(0, 0);
-            } catch (error) {
-                if (error.errors) {
-                    window.alert(`Server Error: ${error.errors[0]}`);
-                } else {
-                    window.alert('Unknown error occurred. Please try again later.');
-                }
-            }
-        } else {
-            window.alert(`Invalid page number. Enter a number between 1 and ${totalPages}`);
-        }
-    }
-
-    async displayMovieListFromUser(buttonId, buttonText, listName) {
-        const currentUser = localStorage.getItem('currentUser');
-        const response = await fetch(`${LOCALHOST_URL_USERS}?username=${currentUser}`);
-        const userData = await response.json();
-
-        if (userData.length > 0) {
-            const user = userData[0];
-            const movies = user[listName];
-
-            const genres = await MovieService.initializeGenres();
-            this.moviesContainer.innerHTML = '';
-            if (movies) {
-                movies.forEach((movie) => {
-                    this.createMovieCard(movie, genres, () =>
-                        this.displayMovieDetailsWithRemoveButton(movie, buttonId, buttonText),
-                    );
-                });
-            }
-        }
-        this.paginationUI.clearPagination();
-    }
-
-    displayWatchlist() {
-        this.displayMovieListFromUser('removeFromWatchlistBtn', 'Remove from Watchlist', 'watchList');
-    }
-
-    displayFavorites() {
-        this.displayMovieListFromUser('removeFromFavoritesBtn', 'Remove from Favorites', 'favorites');
-    }
-
     displayMovieDetails(movie) {
         this.movieModal.displayModal();
         this.movieModal.setModalContent(`
@@ -140,6 +70,15 @@ export default class MovieUI {
         );
     }
 
+    #checkLoginAndExecute(action, titleMovie) {
+        if (!AuthService.isLoggedIn()) {
+            alert(`Please log in, to add movie ${titleMovie}`);
+        } else {
+            action();
+            this.movieModal.closeModal();
+        }
+    }
+
     displayMovieDetailsWithRemoveButton(movie, buttonId, buttonText) {
         this.movieModal.displayModal();
         this.movieModal.setModalContent(`
@@ -170,5 +109,66 @@ export default class MovieUI {
                     this.movieModal.closeModal();
             });
         }
+    }
+
+    displayWatchlist() {
+        this.displayMovieListFromUser('removeFromWatchlistBtn', 'Remove from Watchlist', 'watchList');
+    }
+
+    displayFavorites() {
+        this.displayMovieListFromUser('removeFromFavoritesBtn', 'Remove from Favorites', 'favorites');
+    }
+
+    async displayMovieListFromUser(buttonId, buttonText, listName) {
+        const currentUser = localStorage.getItem('currentUser');
+        const response = await fetch(`${LOCALHOST_URL_USERS}?username=${currentUser}`);
+        const userData = await response.json();
+
+        if (userData.length > 0) {
+            const user = userData[0];
+            const movies = user[listName];
+
+            const genres = await MovieService.initializeGenres();
+            this.moviesContainer.innerHTML = '';
+            if (movies) {
+                movies.forEach((movie) => {
+                    this.createMovieCard(movie, genres, () =>
+                        this.displayMovieDetailsWithRemoveButton(movie, buttonId, buttonText),
+                    );
+                });
+            }
+        }
+        this.paginationUI.clearPagination();
+    }
+
+    async navigateToPage(pageNumber, totalPages) {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+            let data;
+            try {
+                if (this.filter) {
+                    data = await MovieService.fetchFilteredMovies(pageNumber, this.filter);
+                } else {
+                    data = await MovieService.fetchMovies(pageNumber);
+                }
+                this.displayMovies(data.results);
+                this.paginationUI.displayPagination(pageNumber, data.total_pages);
+                window.scrollTo(0, 0);
+            } catch (error) {
+                if (error.errors) {
+                    window.alert(`Server Error: ${error.errors[0]}`);
+                } else {
+                    window.alert('Unknown error occurred. Please try again later.');
+                }
+            }
+        } else {
+            window.alert(`Invalid page number. Enter a number between 1 and ${totalPages}`);
+        }
+    }
+
+    async applyFilter(filter) {
+        this.filter = filter;
+        const data = await MovieService.fetchFilteredMovies(START_PAGE, this.filter);
+        this.displayMovies(data.results);
+        this.paginationUI.displayPagination(START_PAGE, data.total_pages);
     }
 }

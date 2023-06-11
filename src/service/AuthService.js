@@ -1,7 +1,7 @@
 import { LOCALHOST_URL_USERS } from '../config/config.js';
 import { fetchData, saveData } from './fetchService.js';
 
-export default class AuthService {    
+export default class AuthService {
     static async authenticate(username, password) {
         const data = await fetchData(LOCALHOST_URL_USERS);
         const user = data.find((user) => user.username === username && user.password === password);
@@ -35,11 +35,7 @@ export default class AuthService {
         return saveData(LOCALHOST_URL_USERS, 'POST', user);
     }
 
-    
-
-    static isLoggedIn() {       
-        return localStorage.getItem('currentUser') !== null
+    static isLoggedIn() {
+        return localStorage.getItem('currentUser') !== null;
     }
-
-   
 }
