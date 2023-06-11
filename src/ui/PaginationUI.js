@@ -1,14 +1,16 @@
 import { createButton, createInput } from '../util/PaginationUtil.js';
-import ButtonHandler from '../util/ButtonHandler.js';
+
 
 export default class PaginationUI {
+    #paginationContainer;
+   
+
     constructor(paginationContainerId) {
-        this.paginationContainer = document.getElementById(paginationContainerId);
-        this.buttonHandler = new ButtonHandler();
+        this.#paginationContainer = document.getElementById(paginationContainerId);        
     }
 
     displayPagination(currentPage, totalPages) {
-        this.paginationContainer.innerHTML = '';
+        this.#paginationContainer.innerHTML = '';
 
         const prevBtn = createButton('Previous', currentPage > 1, () =>
             this.movieUI.navigateToPage(currentPage - 1, totalPages),
@@ -26,13 +28,13 @@ export default class PaginationUI {
             this.movieUI.navigateToPage(parseInt(pageInput.value), totalPages),
         );
 
-        this.paginationContainer.append(prevBtn, pageInput, pageInputBtn, nextBtn);
+        this.#paginationContainer.append(prevBtn, pageInput, pageInputBtn, nextBtn);
     }
 
     setMovieUI(movieUI) {
         this.movieUI = movieUI;
     }
     clearPagination() {
-        this.paginationContainer.innerHTML = '';
+        this.#paginationContainer.innerHTML = '';
     }
 }

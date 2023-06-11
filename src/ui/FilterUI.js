@@ -1,10 +1,12 @@
 import MovieService from '../service/moviesService.js';
 import ModalHandler from '../util/ModalHandler.js';
 
-export default class FilterUI {
+export default class FilterUI {    
+    #movieUI;
+
     constructor(filterModalId, movieUI) {
         this.filterModal = new ModalHandler(filterModalId);
-        this.movieUI = movieUI;
+        this.#movieUI = movieUI;
         this.initializeFilterUI();
     }
 
@@ -68,7 +70,7 @@ export default class FilterUI {
             .getElementById('filterCloseBtn')
             .addEventListener('click', () => this.filterModal.closeModal());
     }
-    
+
     updateAvailableGenres(genreSelect, selectedGenre) {
         const currentSelectedGenre = genreSelect.value;
         genreSelect.innerHTML = '';
@@ -93,7 +95,7 @@ export default class FilterUI {
         const filterSettings = this.getFilterSettings();
         if (this.validateYearFilter(filterSettings.yearFrom, filterSettings.yearTo)) {
             this.filter = filterSettings;
-            this.movieUI.applyFilter(this.filter);
+            this.#movieUI.applyFilter(this.filter);
             this.filterModal.closeModal();
         } else {
             alert('Invalid year filter. Please check the "Year From" and "Year To" inputs.');
@@ -114,7 +116,7 @@ export default class FilterUI {
         document.getElementById('genreWithoutFilter').value = '';
         document.getElementById('yearFromFilter').value = '';
         document.getElementById('yearToFilter').value = '';
-        this.movieUI.applyFilter(null);
+        this.#movieUI.applyFilter(null);
     }
 
     validateYearFilter(yearFrom, yearTo) {

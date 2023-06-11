@@ -3,16 +3,18 @@ import AuthService from '../service/AuthService.js';
 
 
 export default class AuthUI {
+    #authModal;
+    #authHandler;
+    #registerHandler;
     constructor(authModalId, authHandler, registerHandler) {
-        this.authModal = new ModalHandler(authModalId);
-      
-        this.authHandler = authHandler;
-        this.registerHandler = registerHandler;
+        this.#authModal = new ModalHandler(authModalId);      
+        this.#authHandler = authHandler;
+        this.#registerHandler = registerHandler;
         this.initializeAuthUI();
     }
 
     initializeAuthUI() {
-        this.authModal.setModalContent(`
+        this.#authModal.setModalContent(`
     <div class="modal-content">
         <span id="loginCloseBtn" class="closeLogin">&times;</span>        
         <h2>Login</h2>
@@ -35,11 +37,11 @@ export default class AuthUI {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        const result = await this.authHandler(username, password);
+        const result = await this.#authHandler(username, password);
         if (result) {
             this.updateUIBasedOnAuthStatus();
             document.getElementById('username-display').textContent = username;
-            this.authModal.closeModal();            
+            this.#authModal.closeModal();            
         } else {
             alert('Failed to login. Please check your credentials.');
         }
@@ -51,7 +53,7 @@ export default class AuthUI {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        const result = this.registerHandler(username, password);
+        const result = this.#registerHandler(username, password);
         if (result) {
             this.updateUIBasedOnAuthStatus()
             alert('Registration successful. You can now login.');
@@ -67,6 +69,6 @@ export default class AuthUI {
     }
 
     openModal() {
-        this.authModal.displayModal();
+        this.#authModal.displayModal();
     }
 }

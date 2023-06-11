@@ -1,21 +1,27 @@
 import { MOVIE_IMAGE_URL, START_PAGE, LOCALHOST_URL_USERS } from '../config/config.js';
 import MovieService from '../service/moviesService.js';
 import ModalHandler from '../util/ModalHandler.js';
-import ButtonHandler from '../util/ButtonHandler.js';
+import ButtonHandler from '../util/buttonHandler.js';
 import AuthService from '../service/AuthService.js';
 
 export default class MovieUI {
+    #moviesContainer;
+    #movieModal;
+    #paginationUI;
+    #buttonHandler;
+    #movieService;
+
     constructor(moviesContainerId, movieModalId, paginationUI) {
-        this.moviesContainer = document.getElementById(moviesContainerId);
-        this.movieModal = new ModalHandler(movieModalId);
-        this.paginationUI = paginationUI;
-        this.buttonHandler = new ButtonHandler();
-        this.movieService = new MovieService();
+        this.#moviesContainer = document.getElementById(moviesContainerId);
+        this.#movieModal = new ModalHandler(movieModalId);
+        this.#paginationUI = paginationUI;
+        this.#buttonHandler = new ButtonHandler();
+        this.#movieService = new MovieService();
     }
 
     async displayMovies(movies) {
         const genres = await MovieService.initializeGenres();
-        this.moviesContainer.innerHTML = '';
+        this.#moviesContainer.innerHTML = '';
         movies.forEach((movie) => {
             this.createMovieCard(movie, genres, () => this.displayMovieDetails(movie));
         });
@@ -31,12 +37,12 @@ export default class MovieUI {
             <p>Genres: ${movie.genre_ids.map((id) => genres[id]).join(', ')}</p>
         `;
         movieCard.addEventListener('click', clickEvent);
-        this.moviesContainer.appendChild(movieCard);
+        this.#moviesContainer.appendChild(movieCard);
     }
 
     displayMovieDetails(movie) {
-        this.movieModal.displayModal();
-        this.movieModal.setModalContent(`
+        this.#movieModal.displayModal();
+        this.#movieModal.setModalContent(`
             <div class="modal-content">
                 <span class="close">&times;</span>                
                 <div id="movieDetails">
@@ -53,16 +59,16 @@ export default class MovieUI {
             </div>
         `);
 
-        this.movieModal.addCloseListener();
+        this.#movieModal.addCloseListener();
 
-        this.buttonHandler.addButtonListener('addWatchlistBtn', () =>
+        this.#buttonHandler.addButtonListener('addWatchlistBtn', () =>
             this.#checkLoginAndExecute(
                 () => MovieService.addMovieToUserList(movie, 'watchList'),
                 movie.title,
             ),
         );
 
-        this.buttonHandler.addButtonListener('addFavoritesBtn', () =>
+        this.#buttonHandler.addButtonListener('addFavoritesBtn', () =>
             this.#checkLoginAndExecute(
                 () => MovieService.addMovieToUserList(movie, 'favorites'),
                 movie.title,
@@ -75,13 +81,13 @@ export default class MovieUI {
             alert(`Please log in, to add movie ${titleMovie}`);
         } else {
             action();
-            this.movieModal.closeModal();
+            this.#movieModal.closeModal();
         }
     }
 
     displayMovieDetailsWithRemoveButton(movie, buttonId, buttonText) {
-        this.movieModal.displayModal();
-        this.movieModal.setModalContent(`
+        this.#movieModal.displayModal();
+        this.#movieModal.setModalContent(`
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <div id="movieDetails">
@@ -97,16 +103,16 @@ export default class MovieUI {
             </div>
         `);
 
-        this.movieModal.addCloseListener();
+        this.#movieModal.addCloseListener();
         if (buttonId === 'removeFromWatchlistBtn') {
-            this.buttonHandler.addButtonListener('removeFromWatchlistBtn', () => {
-                this.movieService.removeFromList('watchList', movie.id, () => this.displayWatchlist()),
-                    this.movieModal.closeModal();
+            this.#buttonHandler.addButtonListener('removeFromWatchlistBtn', () => {
+                this.#movieService.removeFromList('watchList', movie.id, () => this.displayWatchlist()),
+                    this.#movieModal.closeModal();
             });
         } else if (buttonId === 'removeFromFavoritesBtn') {
-            this.buttonHandler.addButtonListener('removeFromFavoritesBtn', () => {
-                this.movieService.removeFromList('favorites', movie.id, () => this.displayFavorites()),
-                    this.movieModal.closeModal();
+            this.#buttonHandler.addButtonListener('removeFromFavoritesBtn', () => {
+                this.#movieService.removeFromList('favorites', movie.id, () => this.displayFavorites()),
+                    this.#movieModal.closeModal();
             });
         }
     }
@@ -129,7 +135,7 @@ export default class MovieUI {
             const movies = user[listName];
 
             const genres = await MovieService.initializeGenres();
-            this.moviesContainer.innerHTML = '';
+            this.#moviesContainer.innerHTML = '';
             if (movies) {
                 movies.forEach((movie) => {
                     this.createMovieCard(movie, genres, () =>
@@ -138,7 +144,7 @@ export default class MovieUI {
                 });
             }
         }
-        this.paginationUI.clearPagination();
+        this.#paginationUI.clearPagination();
     }
 
     async navigateToPage(pageNumber, totalPages) {
@@ -151,7 +157,7 @@ export default class MovieUI {
                     data = await MovieService.fetchMovies(pageNumber);
                 }
                 this.displayMovies(data.results);
-                this.paginationUI.displayPagination(pageNumber, data.total_pages);
+                this.#paginationUI.displayPagination(pageNumber, data.total_pages);
                 window.scrollTo(0, 0);
             } catch (error) {
                 if (error.errors) {
@@ -169,6 +175,6 @@ export default class MovieUI {
         this.filter = filter;
         const data = await MovieService.fetchFilteredMovies(START_PAGE, this.filter);
         this.displayMovies(data.results);
-        this.paginationUI.displayPagination(START_PAGE, data.total_pages);
+        this.#paginationUI.displayPagination(START_PAGE, data.total_pages);
     }
 }

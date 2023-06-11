@@ -1,7 +1,7 @@
 import { API_KEY, BASE_URL, LOCALHOST_URL_USERS } from '../config/config.js';
 import { fetchData, saveData } from './fetchService.js';
 
-export default class MovieService {
+export default class MovieService {    
     static fetchMovies(page) {
         const url = `${BASE_URL}movie/popular?language=en-US&page=${page}&api_key=${API_KEY}`;
         return fetchData(url);
